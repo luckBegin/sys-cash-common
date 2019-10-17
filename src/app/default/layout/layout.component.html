@@ -1,0 +1,100 @@
+<div class="c-bg-container c-full-container">
+	<div class="c-full-container c-flex-column-center contentContainer">
+		<div class="header c-flex-row-start">
+			<div class="c-flex-row-start" style="width: 200px;height: 100%;">
+				<img [src]="src" class="logo">
+				<div class="c-flex-row-center title">
+					{{ title }}
+				</div>
+			</div>
+
+			<div style="flex : 1" class="c-flex-row-end">
+
+				<div class="c-flex-row-end" style="margin-right: 100px">
+					<div class='operate-icon c-flex-row-start' >
+						<i nz-icon nzType="api" nzTheme="outline" nz-tooltip [nzTitle]="wsState.msg" ></i>
+						<div class="state-circle" [ngClass]="{'state-success':wsState.state,'state-error':!wsState.state}"></div>
+					</div>
+				</div>
+
+				<div class="c-flex-row-end" style="margin-right: 100px">
+					<div class='operate-icon ws-state-error'>
+						<i nz-icon nzType="team" nzTheme="outline"></i>
+						会员查询
+					</div>
+				</div>
+
+				<nz-dropdown nzPlacement="bottomRight">
+					<div class="alain-default__nav-item d-flex align-items-center px-sm" nz-dropdown>
+						<nz-avatar
+							[nzSrc]="headImage"
+							nzSize="default" class="mr-sm"></nz-avatar>
+						<span style="color: #fff;margin-left:5px">
+							{{ name }}
+						</span>
+					</div>
+					<div nz-menu class="width-sm">
+						<div nz-menu-item (click)="changePass()"><i nz-icon type="user" class="mr-sm"></i>
+							修改密码
+						</div>
+						<div nz-menu-item (click)="logout()"><i nz-icon type="logout" class="mr-sm"></i>
+							退出登录
+						</div>
+					</div>
+				</nz-dropdown>
+
+			</div>
+		</div>
+		<div class="router-container">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>
+
+<nz-modal
+	[(nzVisible)]="changePassShow"
+	[nzTitle]="checkoutModalTitle"
+	[nzContent]="checkoutModalContent"
+	[nzFooter]="checkoutModalFotter"
+	(nzOnCancel)="changePassShow = false"
+>
+	<ng-template #checkoutModalTitle>
+		修改密码
+	</ng-template>
+
+	<ng-template #checkoutModalContent>
+		<form nz-form [nzLayout]="'inline'" [formGroup]="form">
+			<nz-form-item class='c-formSec'>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="new">
+					新密码
+				</nz-form-label>
+				<nz-form-control [nzSm]="18" [nzOffset]='1'>
+					<input type="password" nz-input formControlName="new" id="new" placeholder="请输入新密码">
+					<nz-form-explain *ngIf="form.get('new').dirty && form.get('new').errors">
+					<span>
+						新密码不能为空
+					</span>
+					</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='c-formSec'>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="newRepeat">
+					再次输入
+				</nz-form-label>
+				<nz-form-control [nzSm]="18" [nzOffset]='1'>
+					<input type="password" nz-input formControlName="newRepeat" id="newRepeat" placeholder="请输入再次输入新密码">
+					<nz-form-explain *ngIf="form.get('newRepeat').dirty && form.get('newRepeat').errors">
+					<span>
+						再次输入新密码不能为空
+					</span>
+					</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+	</ng-template>
+
+	<ng-template #checkoutModalFotter>
+		<button nz-button nzType="primary" (click)="sure()">确定</button>
+		<button nz-button (click)="changePassShow = false">关闭</button>
+	</ng-template>
+</nz-modal>

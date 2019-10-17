@@ -1,0 +1,98 @@
+@import "../../../variable.less";
+
+:host {
+	width: 100%;
+	height: 100%;
+}
+
+.header {
+	width: 100%;
+	height: 60px;
+	background: rgba(62, 62, 62, 0.75);
+	border-bottom: 1px solid #525252;
+	box-shadow: 0px 2px 3px rgba(62, 62, 62, 0.75);
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+
+.router-container {
+	flex: 1;
+	width: 100%;
+	overflow-y: hidden;
+}
+
+.contentContainer {
+	position: relative;
+	z-index: 5;
+	background: rgba(0, 0, 0, 0.51);
+}
+
+.logo {
+	height: 100%;
+	width: auto;
+	display: block;
+}
+
+.title {
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+.operate-icon{
+	color:#fff;
+	font-size: 15px;
+	cursor: pointer;
+	transition: color .2s ease-in;
+}
+.operate-icon:hover{
+	color:#40a9ff
+}
+
+::ng-deep .vipInfoModal .ant-modal-body{
+	padding: 0 ;
+}
+::ng-deep .vipInfoModal .ant-modal-footer{
+	border: none ;
+}
+.state-circle{
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 7px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.state-success{
+	background: #24bd11;
+
+}
+.state-error{
+	background: #d02e2e;
+}
+.state-error:before {
+	content: '';
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #d02e2e;
+	opacity: 0.7;
+	animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+	animation-delay: 200ms;
+	transition: 0.5s all ease;
+	transform: scale(1);
+}
+@keyframes scale {
+	0% {
+		transform: scale(1);
+	}
+	50%,
+	75% {
+		transform: scale(2.5);
+	}
+	78%, 100% {
+		opacity: 0;
+	}
+}
