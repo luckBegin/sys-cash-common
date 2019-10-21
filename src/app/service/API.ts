@@ -7,21 +7,7 @@ const system = {
 };
 
 const room = {
-	type: HOST + '/room/type/all',
-	area: HOST + '/room/area/all',
-	list: HOST + '/room/list/all',
-	time: HOST + '/room/time/all',
-	getPriceByType: HOST + '/room/price/getPriceByType',
-	openByTime: HOST + '/room/operate/openByTime',
-	openByOutright: HOST + '/room/operate/openByOutright',
-	openByAdvance: HOST + '/room/operate/openByAdvance',
-	roomTodayOrder: HOST + '/room/order/list',
-	roomOrderItem: HOST + '/room/order/itemList',
-	checkoutWithTime: HOST + '/room/operate/checkoutWithTime',
-	reset: HOST + '/room/operate/reset',
-	clean: HOST + '/room/operate/clean',
-	resetAll: HOST + '/room/operate/resetAll',
-	getAllVipOrders: HOST + '/room/order/all/byVipId'
+	order: HOST + '/room/order'
 };
 
 const calc = {

@@ -7,9 +7,11 @@ import {HttpIntercept} from './interceptor.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {NullPipe} from './pipe/null.pipe';
+import {CashOrderComponent} from './component/cash-order/cash-order.component';
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
 const components = [
+	CashOrderComponent
 ];
 const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
 

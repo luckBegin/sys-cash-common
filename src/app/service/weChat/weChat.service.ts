@@ -15,5 +15,5 @@ export class WeChatService {
 	}
 	
 	@GET(API.weChat.qrCode)
-	getQrCode(): any{} ;
+	getQrCode(): any { }
 }
