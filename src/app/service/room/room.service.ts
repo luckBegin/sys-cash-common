@@ -25,5 +25,6 @@ export class RoomService {
 		{ key: '已退线上', value: 7 } ,
 	];
 
+	@GET(API.room.order)
 	public getList( para ?: any ): any | Observable< RESPONSE > {}
 }
