@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {RoomService} from '../../service' ;
+import {RoomOrderService} from '../../service' ;
 
 @Pipe({
 	name: 'discount',

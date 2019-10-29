@@ -1,3 +1,24 @@
 <div class="order-container">
+	<div class="left scrollWrap">
+		<div class = 'order-status'
+		     [ngClass]="{'order-status-active': queryModel.status === '' }"
+		     (click)="changeStatus('')"
+		>
+			全部
+		</div>
+		<div
+			class="order-status"
+			[ngClass]="{'order-status-active': queryModel.status === item.value}"
+			*ngFor="let item of statusENUM"
+			(click)="changeStatus(item.value)"
+		>
+			{{ item.key }}
+		</div>
+	</div>
+	<div class="middle scrollWrap">
 
+	</div>
+	<div class="right scrollWrap">
+
+	</div>
 </div>

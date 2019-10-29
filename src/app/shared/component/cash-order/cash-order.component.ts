@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core' ;
-import {MsgService, RoomService} from '../../../service';
+import {MsgService, RoomOrderService} from '../../../service';
 import {ENUM, RESPONSE} from '../../../models';
 import {QueryModel} from './query.model';
 import {filter, map} from 'rxjs/operators';
@@ -12,16 +12,19 @@ import {filter, map} from 'rxjs/operators';
 export class CashOrderComponent implements OnInit {
 	constructor(
 		private readonly msg: MsgService,
-		private readonly service: RoomService
+		private readonly service: RoomOrderService
 	) {}
 
 	ngOnInit(): void {
-		this.statusENUM = RoomService.ENUM_Status ;
+		this.statusENUM = RoomOrderService.ENUM_Status ;
 	}
 
 	statusENUM: ENUM[] = [] ;
+
 	queryModel: QueryModel = new QueryModel() ;
+
 	list: any[] = [] ;
+
 	getList() {
 		this.service.getList(this.queryModel)
 			.pipe(
@@ -31,5 +34,10 @@ export class CashOrderComponent implements OnInit {
 			.subscribe( (res: any[]) => {
 				this.list = res ;
 			});
+	}
+
+	changeStatus( status: number | string ): void {
+		this.queryModel.status = status ;
+		this.getList() ;
 	}
 }

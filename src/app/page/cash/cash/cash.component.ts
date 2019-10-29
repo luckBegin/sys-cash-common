@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core' ;
-import {MsgService, RoomService} from '../../../service' ;
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core' ;
+import {MsgService, RoomOrderService} from '../../../service' ;
 import {ngIfAnimation} from '../../../router/router-animation' ;
-import {KeyboardService} from '../../../service/keyboard/keyboard.service' ;
-import {WebsocketService} from '../../../service/websocket/websocket.service';
+import {CashRoomComponent} from '../../../shared/component/cash-room/cash-room.component';
+import {CashOrderComponent} from '../../../shared/component/cash-order/cash-order.component';
+import {NzTabChangeEvent} from "ng-zorro-antd";
 
 @Component({
 	selector: 'cash',
@@ -10,20 +11,28 @@ import {WebsocketService} from '../../../service/websocket/websocket.service';
 	styleUrls: ['./cash.component.less'],
 	animations: [ngIfAnimation]
 })
-export class CashComponent implements OnInit, OnDestroy {
+export class CashComponent implements OnInit{
 	constructor(
-		private readonly service: RoomService,
+		private readonly service: RoomOrderService,
 		private readonly msg: MsgService,
-		private readonly keyboardSer: KeyboardService,
-		private readonly WsSocket: WebsocketService
 	) {
 	}
 
+	@ViewChild('cashRoomComponent')
+	private cashRoomComponent: CashRoomComponent ;
+
+	@ViewChild('cashOrderComponent')
+	private cashOrderComponent: CashOrderComponent ;
+
 	ngOnInit(): void {
-		console.log(321) ;
+		this.init(0)
 	}
 
-	ngOnDestroy(): void {
-		console.log(123) ;
+	private init(type: number) {
+		this.cashRoomComponent.init( type ) ;
+	}
+
+	public tabChange($event:NzTabChangeEvent): void{
+		this.init($event.index);
 	}
 }

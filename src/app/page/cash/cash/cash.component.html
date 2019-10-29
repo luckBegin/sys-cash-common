@@ -1,15 +1,13 @@
-<div class="cash-container">
-	<div class="tab-container">
-		<nz-tabset>
-			<nz-tab nzTitle="Tab 1">
+<div class="cash-container c-full-container">
+	<nz-tabset (nzSelectChange) = 'tabChange($event)'>
+		<nz-tab nzTitle="Tab 1">
+			<cash-order #cashOrderComponent></cash-order>
+		</nz-tab>
+		<nz-tab nzTitle="Tab 2">
+			<cash-room #cashRoomComponent></cash-room>
+		</nz-tab>
+		<nz-tab nzTitle="Tab 3">
 
-			</nz-tab>
-			<nz-tab nzTitle="Tab 2">
-
-			</nz-tab>
-			<nz-tab nzTitle="Tab 3">
-
-			</nz-tab>
-		</nz-tabset>
-	</div>
+		</nz-tab>
+	</nz-tabset>
 </div>

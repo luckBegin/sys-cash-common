@@ -1,7 +1,7 @@
 export class QueryModel {
 	pageSize: number;
 	pageNumber: number;
-	status: number;
+	status: number | string;
 	orderNo: number;
 	roomId: number ;
 	vipId: number ;

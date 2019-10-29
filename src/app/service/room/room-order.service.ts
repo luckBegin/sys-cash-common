@@ -7,7 +7,7 @@ import {ENUM, RESPONSE} from '../../models';
 import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
-export class RoomService {
+export class RoomOrderService {
 	constructor(
 		private readonly http: HttpClient,
 		private readonly msg: MsgService
