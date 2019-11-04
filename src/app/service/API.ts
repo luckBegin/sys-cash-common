@@ -1,6 +1,4 @@
-// export const HOST: string = 'http://api.jpgqs.cn';
-import {hostReportError} from 'rxjs/internal-compatibility';
-export const HOST: string = 'http://localhost:3002';
+export const HOST: string = 'http://api.jpgqs.cn';
 const system = {
 	staff: HOST + '/system/staff',
 	changePass: HOST + '/system/staff/changePass',

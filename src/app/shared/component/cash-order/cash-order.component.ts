@@ -19,13 +19,13 @@ export class CashOrderComponent implements OnInit {
 		this.statusENUM = RoomOrderService.ENUM_Status ;
 	}
 
-	statusENUM: ENUM[] = [] ;
+	public statusENUM: ENUM[] = [] ;
 
-	queryModel: QueryModel = new QueryModel() ;
+	private queryModel: QueryModel = new QueryModel() ;
 
-	list: any[] = [] ;
+	public list: any[] = [] ;
 
-	getList() {
+	private getList() {
 		this.service.getList(this.queryModel)
 			.pipe(
 				filter( (res: RESPONSE) => res.success),
@@ -36,7 +36,7 @@ export class CashOrderComponent implements OnInit {
 			});
 	}
 
-	changeStatus( status: number | string ): void {
+	public changeStatus( status: number | string ): void {
 		this.queryModel.status = status ;
 		this.getList() ;
 	}

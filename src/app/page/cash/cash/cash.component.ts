@@ -25,7 +25,7 @@ export class CashComponent implements OnInit{
 	private cashOrderComponent: CashOrderComponent ;
 
 	ngOnInit(): void {
-		this.init(0)
+		this.init(0);
 	}
 
 	private init(type: number) {

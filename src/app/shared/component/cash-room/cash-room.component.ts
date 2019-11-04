@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {MsgService} from '../../../service';
 import {ENUM, RESPONSE} from '../../../models';
 import {EnumService} from '../../../service/enum/enum.service';
-import {interval, Subscribable, Subscription} from "rxjs";
+import {interval, Subscription} from "rxjs";
 import {CONFIG} from "../../../CONFIG";
 import {AdaptorUtils} from "../../utils";
 import {RoomListService} from "../../../service/room/room-list.service";
+import {NzTabChangeEvent} from "ng-zorro-antd";
 
 @Component({
 	selector: 'cash-room' ,
@@ -16,15 +17,15 @@ export class CashRoomComponent implements OnInit {
 	constructor(
 		private readonly msg: MsgService ,
 		private readonly enumSer: EnumService ,
-		private readonly listSer: RoomListService
+		private readonly listSer: RoomListService,
 	) {}
 
 	ngOnInit(): void {
+
 	}
 
 	public type_ENUM: ENUM[] = [] ;
 	public area_ENUM: ENUM[] = [] ;
-
 	private list_raw: { type: any[] , area:any[] } = { type: [], area: [] };
 	private ajaxTimer$: Subscription ;
 
@@ -44,7 +45,32 @@ export class CashRoomComponent implements OnInit {
 					const areaId = item.areaId ;
 					const typeId = item.typeId ;
 
+					if(area[areaId]) {
+						area[areaId].data.push(item);
+					} else {
+						area[areaId] = {
+							name: areaMap[areaId] ,
+							data: [item]
+						}
+					}
+
+					if(type[typeId]) {
+						type[typeId].data.push(item);
+					} else {
+						type[typeId] = {
+							name: typeMap[typeId],
+							data: [item]
+						}
+					}
 				});
+
+				const areaList = [] ;
+				Object.keys(area).forEach(key => areaList.push( area[key]) );
+
+				const typeList = [] ;
+				Object.keys(type).forEach(key => typeList.push( type[key] )) ;
+
+				this.list_raw = { type: typeList , area: areaList };
 			})
 	}
 
@@ -72,5 +98,9 @@ export class CashRoomComponent implements OnInit {
 			if( this.ajaxTimer$ )
 				this.ajaxTimer$.unsubscribe() ;
 		}
+	}
+
+	public tabChange($event:NzTabChangeEvent): void {
+		const idx = $event.index ;
 	}
 }
