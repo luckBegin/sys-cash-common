@@ -22,11 +22,13 @@ export class CashRoomComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	private ENUMS: { area?: ENUM[] , type?: ENUM[] } = { area: [] } ;
-	public classifyENUM: ENUM[] = [] ;
-	private list_raw: { type: any[] , area:any[] } = { type: [], area: [] };
 	private ajaxTimer$: Subscription ;
+	private ENUMS: { area: ENUM[] , type: ENUM[] } = { area: [], type: [] } ;
+	public classifyENUM: ENUM[] = [] ;
 	public active_type: string = 'area' ;
+	public classify_active: string = '' ;
+	private list_raw: { type: any[] , area:any[] } = { type: [], area: [] };
+	public list: any[] = [] ;
 
 	private getList(): void {
 		this.listSer.all()
@@ -70,6 +72,7 @@ export class CashRoomComponent implements OnInit {
 				Object.keys(type).forEach(key => typeList.push( type[key] )) ;
 
 				this.list_raw = { type: typeList , area: areaList };
+				this.switchClassifyType(this.classify_active) ;
 			})
 	}
 
@@ -103,5 +106,17 @@ export class CashRoomComponent implements OnInit {
 		if( this.active_type === type ) return ;
 		this.active_type = type ;
 		this.classifyENUM = this.ENUMS[type] ;
+	}
+
+	public switchClassifyType(type: string): void{
+		const data = this.list_raw[this.active_type] ;
+
+		if( type === '' ){
+			this.list = data ;
+		} else {
+			this.list = data[type] ;
+		}
+
+		this.classify_active = type ;
 	}
 }

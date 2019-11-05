@@ -13,16 +13,43 @@
 			>
 				type
 			</div>
-
-			<div class = 'classify-item-wrap'>
-				<div cl
-				     left-classify></div>
+		</div>
+		<div class = 'classify-item-wrap'>
+			<div
+					class="left-classify"
+					[ngClass]="{'classify-active': classify_active === ''}"
+					(click)="switchClassifyType('')"
+			>
+				全部
+			</div>
+			<div
+					class = 'left-classify'
+					*ngFor="let item of classifyENUM"
+					[ngClass]="{'classify-active': classify_active === item.value}"
+					(click)="switchClassifyType(item.value)"
+			>
+				{{ item.key }}
 			</div>
 		</div>
 	</div>
-	<div class="middle scrollWrap">
 
+	<div class="middle scrollWrap">
+		<div class="room-list-container">
+			<div
+				class="room-list-item"
+				*ngFor="let item of list"
+			>
+				<div class="room-list-header">
+					<div class="room-list-header-title">
+						{{ item.name }}
+					</div>
+					<div class="room-list-header-count">
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 	<div class="right scrollWrap">
 
 	</div>

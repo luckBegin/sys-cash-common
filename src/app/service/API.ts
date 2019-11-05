@@ -1,4 +1,4 @@
-export const HOST: string = 'http://api.jpgqs.cn';
+export const HOST: string = 'http://localhost:3002';
 const system = {
 	staff: HOST + '/system/staff',
 	changePass: HOST + '/system/staff/changePass',
