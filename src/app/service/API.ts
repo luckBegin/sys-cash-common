@@ -30,8 +30,10 @@ const vip = {
 	bindCard: HOST + '/vip/user/bindCard' ,
 	integral: HOST + '/vip/user/integral'
 };
+
 const enumUrl = {
 	typeAndArea: HOST + '/enum/typeAndArea'
 }
 const WSUrl: string = 'ws://localhost:3333' ;
+
 export const API = {system, room, calc, utils, basic, weChat , vip  , WSUrl, enumUrl };

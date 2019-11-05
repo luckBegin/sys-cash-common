@@ -1,10 +1,23 @@
 <div class="cash-container">
 	<div class="left scrollWrap">
-		<div class="left-classify">
-			area
-		</div>
-		<div class="left-classify">
-			type
+		<div class="classify-wrap">
+			<div class="left-classify"
+			     [ngClass]="{ 'classify-active': active_type === 'area' }"
+			     (click)="switchType('area')"
+			>
+				area
+			</div>
+			<div class="left-classify"
+			     [ngClass]="{ 'classify-active': active_type === 'type' }"
+			     (click)="switchType('type')"
+			>
+				type
+			</div>
+
+			<div class = 'classify-item-wrap'>
+				<div cl
+				     left-classify></div>
+			</div>
 		</div>
 	</div>
 	<div class="middle scrollWrap">

@@ -20,14 +20,13 @@ export class CashRoomComponent implements OnInit {
 		private readonly listSer: RoomListService,
 	) {}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
 
-	}
-
-	public type_ENUM: ENUM[] = [] ;
-	public area_ENUM: ENUM[] = [] ;
+	private ENUMS: { area?: ENUM[] , type?: ENUM[] } = { area: [] } ;
+	public classifyENUM: ENUM[] = [] ;
 	private list_raw: { type: any[] , area:any[] } = { type: [], area: [] };
 	private ajaxTimer$: Subscription ;
+	public active_type: string = 'area' ;
 
 	private getList(): void {
 		this.listSer.all()
@@ -38,8 +37,8 @@ export class CashRoomComponent implements OnInit {
 				const typeMap = {} ;
 				const areaMap = {} ;
 
-				this.area_ENUM.forEach( (item: ENUM) => areaMap[<string>item.value] = item.key ) ;
-				this.type_ENUM.forEach( (item: ENUM) => typeMap[<string>item.value] = item.key ) ;
+				this.ENUMS.area.forEach( (item: ENUM) => areaMap[<string>item.value] = item.key ) ;
+				this.ENUMS.type.forEach( (item: ENUM) => typeMap[<string>item.value] = item.key ) ;
 
 				res.data.forEach( ( item: any ) => {
 					const areaId = item.areaId ;
@@ -75,13 +74,13 @@ export class CashRoomComponent implements OnInit {
 	}
 
 	private getENUMS(): void {
-		if( this.type_ENUM.length > 0 && this.area_ENUM.length > 0 ) {
+		if( this.ENUMS.type.length > 0 && this.ENUMS.area.length > 0 ) {
 			this.getList() ;
 		} else {
 			this.enumSer.typeAndArea()
 				.subscribe((res: RESPONSE) => {
-					this.type_ENUM = AdaptorUtils.reflect(res.data.type , { id: 'value' , name: 'key'}) ;
-					this.area_ENUM = AdaptorUtils.reflect(res.data.area , { id: 'value' , name: 'key'}) ;
+					this.ENUMS.type = AdaptorUtils.reflect(res.data.type , { id: 'value' , name: 'key'}) ;
+					this.ENUMS.area = AdaptorUtils.reflect(res.data.area , { id: 'value' , name: 'key'}) ;
 					this.getList();
 				});
 		}
@@ -100,7 +99,9 @@ export class CashRoomComponent implements OnInit {
 		}
 	}
 
-	public tabChange($event:NzTabChangeEvent): void {
-		const idx = $event.index ;
+	public switchType(type: string): void {
+		if( this.active_type === type ) return ;
+		this.active_type = type ;
+		this.classifyENUM = this.ENUMS[type] ;
 	}
 }
