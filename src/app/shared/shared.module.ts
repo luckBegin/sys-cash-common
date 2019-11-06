@@ -9,11 +9,14 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NullPipe} from './pipe/null.pipe';
 import {CashOrderComponent} from './component/cash-order/cash-order.component';
 import {CashRoomComponent} from './component/cash-room/cash-room.component';
+import {StatusCountComponent} from "./component/status-count/status-count.component";
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
+
 const components = [
 	CashOrderComponent,
-	CashRoomComponent
+	CashRoomComponent,
+	StatusCountComponent
 ];
 const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
 

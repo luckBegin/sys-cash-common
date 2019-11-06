@@ -66,5 +66,16 @@ export const AdaptorUtils = {
 		recursive(_arr, data, map);
 
 		return _arr;
+	},
+	enumToMap( enumVal: ENUM[] | ENUM ): { [key: string]: any} {
+		const map = {} ;
+		if( enumVal instanceof  Array) {
+			enumVal.forEach( item => {
+				map[item.value as string] = item.key ;
+			})
+		} else {
+			map[enumVal.value as string] = enumVal.key;
+		}
+		return map ;
 	}
 };
