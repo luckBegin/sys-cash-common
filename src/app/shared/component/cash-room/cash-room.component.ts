@@ -33,6 +33,8 @@ export class CashRoomComponent implements OnInit {
 	public list: any[] = [] ;
 
 	public count_total: any ;
+	public selectRoomItem: any = {};
+	public roomOperateModal: boolean = false ;
 
 	private getList(): void {
 		this.listSer.all()
@@ -113,7 +115,7 @@ export class CashRoomComponent implements OnInit {
 			this.getENUMS() ;
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe( () => {
-					this.getList()
+					// this.getList()
 				})
 		} else {
 			if( this.ajaxTimer$ )
@@ -134,6 +136,14 @@ export class CashRoomComponent implements OnInit {
 			this.list = data ;
 		} else {
 			this.list = data.filter(item => item.id === type) ;
+		}
+	}
+
+	public selectRoom(item: any): void{
+		if( this.selectRoomItem.id === item.id ) {
+			this.roomOperateModal = true ;
+		} else {
+			this.selectRoomItem = item
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import { Pipe , PipeTransform } from '@angular/core';
-import {RoomOrderService} from '../../service' ;
+import {RoomListService} from "../../service/room/room-list.service";
 
 @Pipe({
 	name: 'statusPipe' ,
@@ -7,7 +7,7 @@ import {RoomOrderService} from '../../service' ;
 })
 export class StatusPipe implements PipeTransform {
 	transform( value: number | string ): any {
-		const status = RoomOrderService.ENUM_Status.find(item => item.value === value ) ;
+		const status = RoomListService.ENUM_Status.find(item => item.value === value ) ;
 		return status.key ;
 	}
 }

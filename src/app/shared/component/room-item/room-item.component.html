@@ -1,0 +1,25 @@
+<div class=wrapper>
+	<div class="title">
+		<div class="title-name">
+			{{ data.name }} - {{ data.status | statusPipe }}
+		</div>
+		<div class = 'tag-wrapper'>
+			<nz-tag [nzColor]="'orange'">{{ data.typeInfo.name }}</nz-tag>
+			<nz-tag [nzColor]="'magenta'">{{ data.areaInfo.name }}</nz-tag>
+		</div>
+	</div>
+	<!-- 空台 -->
+	<div class="status_1 content" *ngIf="data.status === 1">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
+	<!-- 故障 -->
+	<div class="status_6 content" *ngIf="data.status === 6">
+		故障原因: {{ data.reason | nullPipe }}
+	</div>
+
+	<!-- 清理 -->
+	<div class="status_5 content" *ngIf="data.status === 5"></div>
+</div>

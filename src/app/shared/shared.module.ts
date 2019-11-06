@@ -10,13 +10,15 @@ import {NullPipe} from './pipe/null.pipe';
 import {CashOrderComponent} from './component/cash-order/cash-order.component';
 import {CashRoomComponent} from './component/cash-room/cash-room.component';
 import {StatusCountComponent} from "./component/status-count/status-count.component";
+import {RoomItemComponent} from "./component/room-item/room-itemn.component";
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
 
 const components = [
 	CashOrderComponent,
 	CashRoomComponent,
-	StatusCountComponent
+	StatusCountComponent,
+	RoomItemComponent
 ];
 const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
 
@@ -27,7 +29,7 @@ const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe
 	],
 	imports: [
 		...modules,
-		ReactiveFormsModule
+		ReactiveFormsModule,
 	],
 	exports: [...modules, ...components, ...pipes],
 	providers: [

@@ -47,6 +47,16 @@
 						<status-count [count]="item.status"></status-count>
 					</div>
 				</div>
+				<div class="room-list-item-wrapper">
+					<div
+						class="room-item"
+						*ngFor="let subItem of item.data"
+						(click)="selectRoom(subItem)"
+						[ngClass]="{'room-item-active': subItem.id === selectRoomItem.id }"
+					>
+						<room-item [data]="subItem"></room-item>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -55,3 +65,38 @@
 
 	</div>
 </div>
+
+<nz-modal
+	[(nzVisible)]="roomOperateModal"
+	[nzTitle]="modalTitle"
+	[nzContent]="modalContent"
+	[nzFooter]="modalFooter"
+	(nzOnCancel)="roomOperateModal = false"
+	*ngIf="selectRoomItem.id"
+	nzWidth="60%"
+	class = 'common-modal'
+>
+	<ng-template #modalTitle>
+		<div>
+			<span>
+				{{ selectRoomItem.name }}
+			</span>
+			-
+			<span>
+				{{ selectRoomItem.typeInfo.name }}
+			</span>
+			-
+			<span>
+				{{ selectRoomItem.areaInfo.name }}
+			</span>
+		</div>
+	</ng-template>
+
+	<ng-template #modalContent>
+
+	</ng-template>
+
+	<ng-template #modalFooter>
+		<button nz-button nzType="default" (click)="roomOperateModal = false">取消</button>
+	</ng-template>
+</nz-modal>
