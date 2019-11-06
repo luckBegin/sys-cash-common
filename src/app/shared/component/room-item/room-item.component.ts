@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core' ;
 	templateUrl: './room-item.component.html'
 })
 export class RoomItemComponent {
-	constructor() {} ;
+	constructor() {}
 	@Input() data: any ;
 }

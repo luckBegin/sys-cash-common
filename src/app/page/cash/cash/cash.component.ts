@@ -3,7 +3,7 @@ import {MsgService, RoomOrderService} from '../../../service' ;
 import {ngIfAnimation} from '../../../router/router-animation' ;
 import {CashRoomComponent} from '../../../shared/component/cash-room/cash-room.component';
 import {CashOrderComponent} from '../../../shared/component/cash-order/cash-order.component';
-import {NzTabChangeEvent} from "ng-zorro-antd";
+import {NzTabChangeEvent} from 'ng-zorro-antd';
 
 @Component({
 	selector: 'cash',
@@ -11,7 +11,7 @@ import {NzTabChangeEvent} from "ng-zorro-antd";
 	styleUrls: ['./cash.component.less'],
 	animations: [ngIfAnimation]
 })
-export class CashComponent implements OnInit{
+export class CashComponent implements OnInit {
 	constructor(
 		private readonly service: RoomOrderService,
 		private readonly msg: MsgService,
@@ -32,7 +32,7 @@ export class CashComponent implements OnInit{
 		this.cashRoomComponent.init( type ) ;
 	}
 
-	public tabChange($event:NzTabChangeEvent): void{
+	public tabChange($event: NzTabChangeEvent): void {
 		this.init($event.index);
 	}
 }
