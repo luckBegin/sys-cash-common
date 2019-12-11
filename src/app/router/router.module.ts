@@ -10,8 +10,11 @@ const routes: Routes = [
 		component: LayoutComponent,
 		children: [
 			{
-				path: 'operate' ,
+				path: 'cash' ,
 				loadChildren : '../page/cash/cash.module#CashModule'
+			},{
+				path: 'zk' ,
+				loadChildren : '../page/zk/zk.module#ZkModule'
 			}
 		],
 		canActivate: [RouteguardService]

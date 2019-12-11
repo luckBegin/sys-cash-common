@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MsgService} from '../../../service';
-import {ENUM, RESPONSE} from '../../../models';
-import {EnumService} from '../../../service/enum/enum.service';
+import {MsgService} from '../../../../service';
+import {ENUM, RESPONSE} from '../../../../models';
+import {EnumService} from '../../../../service/enum/enum.service';
 import {interval, Subscription} from 'rxjs';
-import {CONFIG} from '../../../CONFIG';
-import {AdaptorUtils} from '../../utils';
-import {RoomListService} from '../../../service/room/room-list.service';
+import {CONFIG} from '../../../../CONFIG';
+import {AdaptorUtils} from '../../../utils';
+import {RoomListService} from '../../../../service/room/room-list.service';
 
 @Component({
 	selector: 'cash-room',
@@ -132,10 +132,10 @@ export class CashRoomComponent implements OnInit {
 		this.classifyENUM = this.ENUMS[type];
 		if (this.list_raw.area.length > 0 && this.list_raw.area.length > 0) {
 			this.classify_active = '' ;
-			this.switchClassifyType('');
+			this.switchClassifyType(type);
 		}
 	}
-	
+
 	public switchClassifyType(type: string): void {
 		const data = this.list_raw[this.active_type];
 		this.classify_active = type;
@@ -159,7 +159,7 @@ const room_status = (list: any[]): any => {
 	const status = RoomListService.ENUM_Status;
 	const map = {all: 0};
 	status.forEach(item => map[item.value as string] = 0);
-	
+
 	list.forEach((item: any) => {
 		const itemStatus = item.status;
 		if (map.hasOwnProperty(itemStatus)) {

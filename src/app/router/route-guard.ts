@@ -17,7 +17,6 @@ export class RouteguardService implements CanActivate, OnInit {
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		const userInfo = this.sgo.get('loginInfo');
-
 		if ( userInfo ) {
 			return true;
 		} else {

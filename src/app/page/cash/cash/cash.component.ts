@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core' ;
 import {MsgService, RoomOrderService} from '../../../service' ;
 import {ngIfAnimation} from '../../../router/router-animation' ;
-import {CashRoomComponent} from '../../../shared/component/cash-room/cash-room.component';
-import {CashOrderComponent} from '../../../shared/component/cash-order/cash-order.component';
+import {CashRoomComponent} from '../../../shared/component/cash/cash-room/cash-room.component';
+import {CashOrderComponent} from '../../../shared/component/cash/cash-order/cash-order.component';
 import {NzTabChangeEvent} from 'ng-zorro-antd';
 
 @Component({

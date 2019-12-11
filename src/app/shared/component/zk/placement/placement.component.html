@@ -1,0 +1,70 @@
+<div class="cash-container">
+	<div class="left scrollWrap">
+		<div class="classify-wrap">
+			<div class="left-classify"
+			     [ngClass]="{ 'classify-active': active_type === 'area' }"
+			     (click)="switchType('area')"
+			>
+				area
+			</div>
+			<div class="left-classify"
+			     [ngClass]="{ 'classify-active': active_type === 'type' }"
+			     (click)="switchType('type')"
+			>
+				type
+			</div>
+		</div>
+		<div class = 'classify-item-wrap'>
+			<div
+					class="left-classify"
+					[ngClass]="{'classify-active': classify_active === ''}"
+					(click)="switchClassifyType('')"
+			>
+				全部
+			</div>
+			<div
+					class = 'left-classify'
+					*ngFor="let item of classifyENUM"
+					[ngClass]="{'classify-active': classify_active === item.value}"
+					(click)="switchClassifyType(item.value)"
+			>
+				{{ item.key }}
+			</div>
+		</div>
+	</div>
+
+	<div class="middle scrollWrap">
+		<div class = 'status-wrapper' *ngIf='count_total'>
+			<status-count [count]="count_total"></status-count>
+		</div>
+		<div class="room-list-container">
+			<div
+					class="room-list-item"
+					*ngFor="let item of list"
+			>
+				<div class="room-list-header">
+					<div class="room-list-header-title">
+						{{ item.name }}
+					</div>
+					<div class="room-list-header-count">
+						<status-count [count]="item.status"></status-count>
+					</div>
+				</div>
+				<div class="room-list-item-wrapper">
+					<div
+							class="room-item"
+							*ngFor="let subItem of item.data"
+							(click)="selectRoom(subItem)"
+							[ngClass]="{'room-item-active': subItem.id === selectRoomItem.id }"
+					>
+						<room-item [data]="subItem"></room-item>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="right scrollWrap">
+
+	</div>
+</div>

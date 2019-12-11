@@ -7,10 +7,11 @@ import {HttpIntercept} from './interceptor.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {NullPipe} from './pipe/null.pipe';
-import {CashOrderComponent} from './component/cash-order/cash-order.component';
-import {CashRoomComponent} from './component/cash-room/cash-room.component';
+import {CashOrderComponent} from './component/cash/cash-order/cash-order.component';
+import {CashRoomComponent} from './component/cash/cash-room/cash-room.component';
 import {StatusCountComponent} from './component/status-count/status-count.component';
 import {RoomItemComponent} from './component/room-item/room-item.component';
+import {ZkPlacementComponent} from "./component/zk/placement/placement.component";
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
 
@@ -18,7 +19,8 @@ const components = [
 	CashOrderComponent,
 	CashRoomComponent,
 	StatusCountComponent,
-	RoomItemComponent
+	RoomItemComponent,
+	ZkPlacementComponent
 ];
 const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
 
