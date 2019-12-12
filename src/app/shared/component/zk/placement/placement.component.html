@@ -65,6 +65,28 @@
 	</div>
 
 	<div class="right scrollWrap">
-
+		<div class="book-list-wrapper" *ngFor="let item of bookList">
+			<div class="book-item">
+				<div class="c-flex-row-start book-item-info">
+					<div>
+						姓名: <span>{{ item.name }}</span>
+					</div>
+					<div>
+						电话: <span>{{ item.tel }}</span>
+					</div>
+				</div>
+				<div class="c-flex-row-start book-item-info">
+					<div>
+						类型: <span>{{ roomType(item.typeId) }}</span>
+					</div>
+					<div>
+						时间: <span>{{ item.reserveDate | datePie: 'm-d h:i'}}</span>
+					</div>
+				</div>
+				<div class="c-flex-row-start ">
+					备注: <span>{{ item.remark | nullPipe }}</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

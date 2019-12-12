@@ -16,11 +16,50 @@
 		</div>
 	</div>
 
+	<!-- 预定 -->
+	<div class="status_2 content" *ngIf="data.status === 2">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
+	<!-- 待客 -->
+	<div class="status_3 content" *ngIf="data.status === 3">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
+	<!-- 消费 -->
+	<div class="status_4 content" *ngIf="data.status === 4">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
+	<!-- 消费 -->
+	<div class="status_5 content" *ngIf="data.status === 5">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
 	<!-- 故障 -->
 	<div class="status_6 content" *ngIf="data.status === 6">
 		故障原因: {{ data.reason | nullPipe }}
 	</div>
 
-	<!-- 清理 -->
-	<div class="status_5 content" *ngIf="data.status === 5"></div>
+	<!-- 上线 -->
+	<div class="status_7 content" *ngIf="data.status === 7">
+		<div class="mark">
+			备注: {{ data.remark | nullPipe }}
+		</div>
+	</div>
+
+	<!-- 上线 -->
+	<div class="status_8 content" *ngIf="data.status === 8">
+		<div class="mark">
+			线上: {{ data.remark | nullPipe }}
+		</div>
+	</div>
 </div>

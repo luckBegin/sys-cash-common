@@ -6,6 +6,7 @@ import {AdaptorUtils} from "../../../utils";
 import {MsgService} from "../../../../service";
 import {EnumService} from "../../../../service/enum/enum.service";
 import {RoomListService} from "../../../../service/room/room-list.service";
+import {RoomBookService} from "../../../../service/room/room-book.service";
 
 @Component({
 	selector: 'zk-placement',
@@ -17,6 +18,7 @@ export class ZkPlacementComponent implements OnInit {
 		private readonly msg: MsgService,
 		private readonly enumSer: EnumService,
 		private readonly listSer: RoomListService,
+		private readonly bookSer: RoomBookService
 	) {}
 
 	ngOnInit(): void {
@@ -37,8 +39,10 @@ export class ZkPlacementComponent implements OnInit {
 	public selectRoomItem: any = {};
 	public roomOperateModal: boolean = false;
 
+	public bookList: any[] = [] ;
+
 	private getList(): void {
-		this.listSer.all()
+		this.listSer.all({from: 'zk'})
 			.subscribe((res: RESPONSE) => {
 				const area = {};
 				const type = {};
@@ -112,11 +116,13 @@ export class ZkPlacementComponent implements OnInit {
 	}
 
 	public init(type: number): void {
-		if (type === 1) {
+		if (type === 0) {
 			this.getENUMS();
+			this.getBookList() ;
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
-					this.getList()
+					// this.getBookList()
+					//this.getList()
 				});
 		} else {
 			if (this.ajaxTimer$) {
@@ -153,6 +159,18 @@ export class ZkPlacementComponent implements OnInit {
 		} else {
 			this.selectRoomItem = item;
 		}
+	}
+
+	public getBookList(): void {
+		this.bookSer.list()
+			.subscribe( (res: RESPONSE ) => {
+				this.bookList = res.data ;
+			})
+	}
+
+	public roomType( typeId: number ): string {
+		const item = this.ENUMS.type.filter( item => item.value === typeId ) ;
+		return item[0] ? item[0].key : '未知' ;
 	}
 }
 
