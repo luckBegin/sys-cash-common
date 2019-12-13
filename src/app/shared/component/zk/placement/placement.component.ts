@@ -7,6 +7,8 @@ import {MsgService} from "../../../../service";
 import {EnumService} from "../../../../service/enum/enum.service";
 import {RoomListService} from "../../../../service/room/room-list.service";
 import {RoomBookService} from "../../../../service/room/room-book.service";
+import {RoomOperateService} from "../../../../service/room/room-operate.service";
+import {Service} from "../../../../../decorators";
 
 @Component({
 	selector: 'zk-placement',
@@ -18,7 +20,8 @@ export class ZkPlacementComponent implements OnInit {
 		private readonly msg: MsgService,
 		private readonly enumSer: EnumService,
 		private readonly listSer: RoomListService,
-		private readonly bookSer: RoomBookService
+		private readonly bookSer: RoomBookService ,
+		private readonly roomOperateSer: RoomOperateService
 	) {}
 
 	ngOnInit(): void {
@@ -172,6 +175,26 @@ export class ZkPlacementComponent implements OnInit {
 		const item = this.ENUMS.type.filter( item => item.value === typeId ) ;
 		return item[0] ? item[0].key : '未知' ;
 	}
+
+	@Service('roomOperateSer.open' ,true , function(){
+		const id = (this as ZkPlacementComponent).selectRoomItem.id ;
+		return { id } ;
+	})
+	public open($event: MouseEvent): void {
+		this.msg.success('操作成功') ;
+		this.roomOperateModal = false ;
+		this.getList() ;
+	}
+
+	@Service('roomOperateSer.clean' ,true , function(){
+		const id = (this as ZkPlacementComponent).selectRoomItem.id ;
+		return { id } ;
+	})
+	public clean($event: MouseEvent): void {
+		this.msg.success('操作成功') ;
+		this.roomOperateModal = false ;
+		this.getList() ;
+	}
 }
 
 const room_status = (list: any[]): any => {
@@ -186,7 +209,6 @@ const room_status = (list: any[]): any => {
 		}
 		map.all += 1;
 	});
-
 	return map;
 };
 const objMerge = (obj: any, target: any): any => {

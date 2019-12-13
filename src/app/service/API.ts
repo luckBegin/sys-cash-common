@@ -8,7 +8,8 @@ const system = {
 const room = {
 	order: HOST + '/room/order',
 	list: HOST + '/room/list',
-	book:HOST + '/room/book'
+	book:HOST + '/room/book',
+	operate: HOST + '/room/operate'
 };
 
 const calc = {

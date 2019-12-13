@@ -90,3 +90,49 @@
 		</div>
 	</div>
 </div>
+
+
+<nz-modal
+	[(nzVisible)]="roomOperateModal"
+	[nzTitle]="modalTitle"
+	[nzContent]="modalContent"
+	[nzFooter]="modalFooter"
+	(nzOnCancel)="roomOperateModal = false"
+	*ngIf="selectRoomItem.id"
+	nzWidth="60%"
+	class = 'common-modal'
+>
+	<ng-template #modalTitle>
+		<div>
+			<span>
+				{{ selectRoomItem.name }}
+			</span>
+			-
+			<span>
+				{{ selectRoomItem.typeInfo.name }}
+			</span>
+			-
+			<span>
+				{{ selectRoomItem.areaInfo.name }}
+			</span>
+		</div>
+	</ng-template>
+
+	<ng-template #modalContent>
+
+	</ng-template>
+
+	<ng-template #modalFooter>
+		<button nz-button class = 'status_4' (click) = 'open($event)'
+		    *ngIf="selectRoomItem.status === 1 || selectRoomItem.status === 2 || selectRoomItem.status === 3"
+		>
+			开台
+		</button>
+		<button nz-button class = 'status_5' (click) = 'clean($event)'
+		        *ngIf="selectRoomItem.status === 4"
+		>
+			置清理
+		</button>
+		<button nz-button nzType="default" (click)="roomOperateModal = false">取消</button>
+	</ng-template>
+</nz-modal>

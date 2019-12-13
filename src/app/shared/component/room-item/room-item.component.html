@@ -1,7 +1,8 @@
 <div class=wrapper>
 	<div class="title">
 		<div class="title-name">
-			{{ data.name }} - {{ data.status | statusPipe }}
+			{{ data.name }}
+			<!-- - {{ data.status | statusPipe }} -->
 		</div>
 		<div class = 'tag-wrapper'>
 			<nz-tag [nzColor]="'orange'">{{ data.typeInfo.name }}</nz-tag>
@@ -37,7 +38,7 @@
 		</div>
 	</div>
 
-	<!-- 消费 -->
+	<!-- 清理 -->
 	<div class="status_5 content" *ngIf="data.status === 5">
 		<div class="mark">
 			备注: {{ data.remark | nullPipe }}
@@ -56,7 +57,7 @@
 		</div>
 	</div>
 
-	<!-- 上线 -->
+	<!-- 线上 -->
 	<div class="status_8 content" *ngIf="data.status === 8">
 		<div class="mark">
 			线上: {{ data.remark | nullPipe }}
