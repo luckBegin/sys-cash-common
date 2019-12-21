@@ -1,0 +1,30 @@
+<div class = 'c-full-container'>
+	<div class = 'scrollContainer c-flex-row-start'>
+		<div class = 'left scrollWrap'>
+			<div
+				class = 'left-item'
+				[ngClass]="{'left-item-active': activeType === ''}"
+				(click)="classify('')"
+			>
+				全部
+			</div>
+			<div class = 'left-item'
+			     *ngFor="let item of classifyENUM"
+			     [ngClass]="{'left-item-active': activeType === item.value}"
+			     (click)="classify(item.value)"
+			>
+				{{ item.key }}
+			</div>
+		</div>
+		<div class = 'right scrollWrap'>
+			<div class="right-item c-flex-row-space"
+			     *ngFor="let item of list"
+			     (click)="selectRoom( item ) "
+			     [ngClass]="{'right-item-active': item.id === room.id }"
+			>
+				<div>{{ item.name }}</div>
+				<div>{{ item.typeInfo.name }}</div>
+			</div>
+		</div>
+	</div>
+</div>

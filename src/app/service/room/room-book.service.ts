@@ -15,5 +15,8 @@ export class RoomBookService {
 	}
 
 	@GET(API.room.book + '/list')
-	public list( para?: any): any | Observable< RESPONSE > {} ;
+	public list( para?: any): any | Observable< RESPONSE > {} 
+
+	@POST(API.room.book + '/book')
+	public book( para?: any): any | Observable< RESPONSE > {} 
 }

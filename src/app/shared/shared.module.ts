@@ -11,7 +11,8 @@ import {CashOrderComponent} from './component/cash/cash-order/cash-order.compone
 import {CashRoomComponent} from './component/cash/cash-room/cash-room.component';
 import {StatusCountComponent} from './component/status-count/status-count.component';
 import {RoomItemComponent} from './component/room-item/room-item.component';
-import {ZkPlacementComponent} from "./component/zk/placement/placement.component";
+import {ZkPlacementComponent} from './component/zk/placement/placement.component';
+import {CommonRoomClassifyComponent} from "./component/room-classify/room-classify.component";
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
 
@@ -20,7 +21,8 @@ const components = [
 	CashRoomComponent,
 	StatusCountComponent,
 	RoomItemComponent,
-	ZkPlacementComponent
+	ZkPlacementComponent,
+	CommonRoomClassifyComponent
 ];
 const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
 

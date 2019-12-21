@@ -19,8 +19,35 @@
 
 	<!-- 预定 -->
 	<div class="status_2 content" *ngIf="data.status === 2">
-		<div class="mark">
-			备注: {{ data.remark | nullPipe }}
+		<div class="c-flex-row-space content-row">
+			<div>
+				姓名: {{ data.bookInfo.name | nullPipe }}
+			</div>
+			<div>
+				手机: {{ data.bookInfo.tel | nullPipe }}
+			</div>
+		</div>
+
+		<div class = 'c-flex-row-space content-row'>
+			<div>
+				人数: {{ data.bookInfo.num | nullPipe }}人
+			</div>
+			<div>
+				到店: {{ data.bookInfo.reserveDate | datePie:'m-d h:m' }}
+			</div>
+		</div>
+
+		<div class = 'c-flex-row-space content-row'>
+			<div>
+				销售经理: {{ data.bookInfo.managerName | nullPipe }}
+			</div>
+			<div>
+				经理电话: {{ data.bookInfo.managerTel | nullPipe }}
+			</div>
+		</div>
+
+		<div>
+			备注: {{ data.bookInfo.remark | nullPipe }}
 		</div>
 	</div>
 

@@ -65,8 +65,20 @@
 	</div>
 
 	<div class="right scrollWrap">
+		<div style="margin-bottom: 16px;">
+			<nz-input-group [nzAddOnBefore]="addOnBeforeTemplate" >
+				<input [(ngModel)]="bookQueryModel.value" type="text" nz-input (keydown.enter)="searchBookList()"/>
+			</nz-input-group>
+			<ng-template #addOnBeforeTemplate>
+				<nz-select [(ngModel)]="bookQueryModel.type">
+					<nz-option [nzLabel]="'全部'" [nzValue]="''"></nz-option>
+					<nz-option [nzLabel]="'名字'" [nzValue]="'name'"></nz-option>
+					<nz-option [nzLabel]="'手机'" [nzValue]="'tel'"></nz-option>
+				</nz-select>
+			</ng-template>
+		</div>
 		<div class="book-list-wrapper" *ngFor="let item of bookList">
-			<div class="book-item">
+			<div class="book-item" (click)="book(item)">
 				<div class="c-flex-row-start book-item-info">
 					<div>
 						姓名: <span>{{ item.name }}</span>
@@ -90,7 +102,6 @@
 		</div>
 	</div>
 </div>
-
 
 <nz-modal
 	[(nzVisible)]="roomOperateModal"
@@ -123,6 +134,11 @@
 	</ng-template>
 
 	<ng-template #modalFooter>
+		<button nz-button class = 'status_2' (click) = 'cancelBook($event)'
+		        *ngIf="selectRoomItem.status === 2"
+		>
+			取消安排
+		</button>
 		<button nz-button class = 'status_4' (click) = 'open($event)'
 		    *ngIf="selectRoomItem.status === 1 || selectRoomItem.status === 2 || selectRoomItem.status === 3"
 		>
@@ -134,5 +150,42 @@
 			置清理
 		</button>
 		<button nz-button nzType="default" (click)="roomOperateModal = false">取消</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal
+	[(nzVisible)]="bookModal"
+	[nzTitle]="bookTitle"
+	[nzContent]="bookContent"
+	[nzFooter]="bookFooter"
+	(nzOnCancel)="bookModal = false"
+	*ngIf="selectBookInfo.id"
+	nzWidth="450px"
+	class = 'common-modal modal-empty'
+>
+	<ng-template #bookTitle>
+		<div>
+			<span>
+				{{ selectBookInfo.name }}
+			</span>
+				-
+			<span>
+				{{ selectBookInfo.tel }}
+			</span>
+		</div>
+	</ng-template>
+
+	<ng-template #bookContent>
+		<common-room-classify
+			#commonRoomClassifyComponent type = 'type'
+			(select)="roomSelect($event)"
+		>
+
+		</common-room-classify>
+	</ng-template>
+
+	<ng-template #bookFooter>
+		<button nz-button nzType="primary" *ngIf="bookRoomSelect" (click)="makeBook($event)">确定</button>
+		<button nz-button nzType="default" (click)="bookModal = false">关闭</button>
 	</ng-template>
 </nz-modal>

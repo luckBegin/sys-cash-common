@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core' ;
-import {HttpClient} from "@angular/common/http";
-import {MsgService} from "..";
-import {API} from "../API";
-import {GET} from "../../../decorators";
-import {Observable} from "rxjs";
-import {ENUM, RESPONSE} from "../../models";
+import {HttpClient} from '@angular/common/http';
+import {MsgService} from '..';
+import {API} from '../API';
+import {GET, POST} from '../../../decorators';
+import {Observable} from 'rxjs';
+import {ENUM, RESPONSE} from '../../models';
 
-
-@Injectable({providedIn:'root'})
+@Injectable({providedIn: 'root'})
 export class RoomListService {
 	constructor(
 		private readonly http: HttpClient,
@@ -16,7 +15,7 @@ export class RoomListService {
 	}
 
 	@GET(API.room.list + '/all')
-	public all( para?: any): any | Observable< RESPONSE > {} ;
+	public all( para?: any): any | Observable< RESPONSE > {}
 
 	static ENUM_Status: ENUM[] = [
 		{ key: '空台' , value: 1} ,
@@ -27,5 +26,8 @@ export class RoomListService {
 		{ key: '故障' , value: 6} ,
 		{ key: '上线' , value: 7} ,
 		{ key: '线上' , value: 8} ,
-	]
+	];
+
+	@POST(API.room.list + '/cancelBook')
+	public cancelBook( para?: any): any | Observable< RESPONSE > {}
 }

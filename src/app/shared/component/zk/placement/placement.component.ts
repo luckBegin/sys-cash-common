@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ENUM, RESPONSE} from "../../../../models";
-import {interval, Subscription} from "rxjs";
-import {CONFIG} from "../../../../CONFIG";
-import {AdaptorUtils} from "../../../utils";
-import {MsgService} from "../../../../service";
-import {EnumService} from "../../../../service/enum/enum.service";
-import {RoomListService} from "../../../../service/room/room-list.service";
-import {RoomBookService} from "../../../../service/room/room-book.service";
-import {RoomOperateService} from "../../../../service/room/room-operate.service";
-import {Service} from "../../../../../decorators";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ENUM, RESPONSE} from '../../../../models';
+import {interval, Subscription} from 'rxjs';
+import {CONFIG} from '../../../../CONFIG';
+import {AdaptorUtils} from '../../../utils';
+import {MsgService} from '../../../../service';
+import {EnumService} from '../../../../service/enum/enum.service';
+import {RoomListService} from '../../../../service/room/room-list.service';
+import {RoomBookService} from '../../../../service/room/room-book.service';
+import {RoomOperateService} from '../../../../service/room/room-operate.service';
+import {Service} from '../../../../../decorators';
+import {BookQueryModel} from './query.model';
+import {CommonRoomClassifyComponent} from '../../room-classify/room-classify.component';
 
 @Component({
 	selector: 'zk-placement',
@@ -125,7 +127,7 @@ export class ZkPlacementComponent implements OnInit {
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
 					// this.getBookList()
-					//this.getList()
+					// this.getList()
 				});
 		} else {
 			if (this.ajaxTimer$) {
@@ -158,25 +160,40 @@ export class ZkPlacementComponent implements OnInit {
 
 	public selectRoom(item: any): void {
 		if (this.selectRoomItem.id === item.id) {
+			this.selectRoomItem = item ;
 			this.roomOperateModal = true;
 		} else {
 			this.selectRoomItem = item;
 		}
 	}
 
+	public bookQueryModel: BookQueryModel = new BookQueryModel();
+	private query: any = {} ;
 	public getBookList(): void {
-		this.bookSer.list()
+		this.bookSer.list( this.query )
 			.subscribe( (res: RESPONSE ) => {
 				this.bookList = res.data ;
-			})
+			});
+	}
+	public searchBookList(): void {
+		const type = this.bookQueryModel.type ;
+		const val = this.bookQueryModel.value ;
+
+		if ( type && val ) {
+			this.query = { [type] : val } ;
+		} else {
+			this.query = {} ;
+		}
+
+		this.getBookList();
 	}
 
 	public roomType( typeId: number ): string {
-		const item = this.ENUMS.type.filter( item => item.value === typeId ) ;
-		return item[0] ? item[0].key : '未知' ;
+		const data = this.ENUMS.type.filter( item => item.value === typeId ) ;
+		return data[0] ? data[0].key : '未知' ;
 	}
 
-	@Service('roomOperateSer.open' ,true , function(){
+	@Service('roomOperateSer.open' , true , function() {
 		const id = (this as ZkPlacementComponent).selectRoomItem.id ;
 		return { id } ;
 	})
@@ -186,7 +203,7 @@ export class ZkPlacementComponent implements OnInit {
 		this.getList() ;
 	}
 
-	@Service('roomOperateSer.clean' ,true , function(){
+	@Service('roomOperateSer.clean' , true , function() {
 		const id = (this as ZkPlacementComponent).selectRoomItem.id ;
 		return { id } ;
 	})
@@ -194,6 +211,50 @@ export class ZkPlacementComponent implements OnInit {
 		this.msg.success('操作成功') ;
 		this.roomOperateModal = false ;
 		this.getList() ;
+	}
+
+	public bookModal: boolean = false ;
+	public selectBookInfo: any = {}  ;
+
+	@ViewChild('commonRoomClassifyComponent')
+	private commonRoomClassifyComponent: CommonRoomClassifyComponent ;
+
+	public book( $event: any ): void {
+		this.bookModal = true ;
+		this.selectBookInfo = $event ;
+		this.bookRoomSelect = null ;
+		if ( this.commonRoomClassifyComponent ) {
+			this.commonRoomClassifyComponent.init() ;
+		}
+	}
+
+	public bookRoomSelect: any = null ;
+	public roomSelect($event: any): void {
+		this.bookRoomSelect = $event ;
+	}
+
+	@Service('bookSer.book' , true , function() {
+		return {
+			bookId: (this as ZkPlacementComponent).selectBookInfo.id ,
+			roomId: (this as ZkPlacementComponent).bookRoomSelect.id
+		};
+	})
+	public makeBook($event: MouseEvent): void {
+		this.msg.success('操作成功') ;
+		this.getBookList() ;
+		this.getList() ;
+		this.bookModal = false ;
+	}
+
+	@Service('listSer.cancelBook' , true , function() {
+		const id = (this as ZkPlacementComponent).selectRoomItem.bookId ;
+		return { id } ;
+	})
+	public cancelBook($event: MouseEvent): void {
+		this.getBookList() ;
+		this.getList() ;
+		this.roomOperateModal = false ;
+		this.msg.success('操作成功') ;
 	}
 }
 
