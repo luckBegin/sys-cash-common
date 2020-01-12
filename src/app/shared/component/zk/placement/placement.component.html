@@ -110,7 +110,7 @@
 	[nzFooter]="modalFooter"
 	(nzOnCancel)="roomOperateModal = false"
 	*ngIf="selectRoomItem.id"
-	nzWidth="60%"
+	nzWidth="700px"
 	class = 'common-modal'
 >
 	<ng-template #modalTitle>
@@ -130,7 +130,14 @@
 	</ng-template>
 
 	<ng-template #modalContent>
-
+		<div class = 'section-info'>
+			<span>桌台类型: </span>
+			<span>{{ selectRoomItem.typeInfo.name }}</span>
+		</div>
+		<div class = 'section-info'>
+			<span>z桌台状态: </span>
+			<span>{{ selectRoomItem.typeInfo.name }}</span>
+		</div>
 	</ng-template>
 
 	<ng-template #modalFooter>
