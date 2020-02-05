@@ -132,7 +132,6 @@ export class CommonRoomClassifyComponent implements OnInit {
 	public room: any = {} ;
 	public selectRoom( $event: any): void {
 		this.room = $event ;
-		console.log($event);
 		this.select.next($event) ;
 	}
 }
@@ -151,6 +150,7 @@ const room_status = (list: any[]): any => {
 	});
 	return map;
 };
+
 const objMerge = (obj: any, target: any): any => {
 	const map = {};
 	Object.keys(obj).forEach(key => {

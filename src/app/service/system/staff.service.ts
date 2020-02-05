@@ -17,8 +17,7 @@ export class StaffService {
 	}
 	
 	@POST(API.system.staff + '/login', true, '登录失败,原因:')
-	login(data: any): any {
-	}
+	login(data: any): any {}
 	
 	qrLogin(data ?: any): any {
 		return this.http.get(API.system.staff + '/login', {
@@ -27,6 +26,8 @@ export class StaffService {
 	}
 	
 	@PUT(API.system.changePass)
-	changePass(data ?: any): Observable<RESPONSE> | any {
-	}
+	changePass(data ?: any): Observable<RESPONSE> | any {}
+
+	@GET(API.system.manager + '/all')
+	managerAllList( data?: any): Observable< RESPONSE > | any {}
 }

@@ -78,25 +78,35 @@
 			</ng-template>
 		</div>
 		<div class="book-list-wrapper" *ngFor="let item of bookList">
-			<div class="book-item" (click)="book(item)">
-				<div class="c-flex-row-start book-item-info">
-					<div>
-						姓名: <span>{{ item.name }}</span>
+			<div class="book-item">
+				<i
+					nz-icon nzType="delete" nzTheme="outline"
+					class = 'book-item-delete'
+					nz-popconfirm
+					nzTitle="确定取消该条预定?"
+					(nzOnConfirm)="bookCancel(item)"
+				>
+				</i>
+				<div (click)="book(item)">
+					<div class="c-flex-row-start book-item-info">
+						<div>
+							姓名: <span>{{ item.name }}</span>
+						</div>
+						<div>
+							电话: <span>{{ item.tel }}</span>
+						</div>
 					</div>
-					<div>
-						电话: <span>{{ item.tel }}</span>
+					<div class="c-flex-row-start book-item-info">
+						<div>
+							类型: <span>{{ roomType(item.typeId) }}</span>
+						</div>
+						<div>
+							时间: <span>{{ item.reserveDate | datePie: 'm-d h:i'}}</span>
+						</div>
 					</div>
-				</div>
-				<div class="c-flex-row-start book-item-info">
-					<div>
-						类型: <span>{{ roomType(item.typeId) }}</span>
+					<div class="c-flex-row-start">
+						备注:<span>{{ item.remark | nullPipe }}</span>
 					</div>
-					<div>
-						时间: <span>{{ item.reserveDate | datePie: 'm-d h:i'}}</span>
-					</div>
-				</div>
-				<div class="c-flex-row-start ">
-					备注: <span>{{ item.remark | nullPipe }}</span>
 				</div>
 			</div>
 		</div>
@@ -130,14 +140,78 @@
 	</ng-template>
 
 	<ng-template #modalContent>
-		<div class = 'section-info'>
-			<span>桌台类型: </span>
-			<span>{{ selectRoomItem.typeInfo.name }}</span>
+		<div class = 'c-flex-row-space section-block'>
+			<div>
+				<span class = 'c-info-title'>桌台类型: </span>
+				<span  class = 'c-info-content'>
+					{{ selectRoomItem.typeInfo.name }}
+				</span>
+			</div>
+			<div>
+				<span class = 'c-info-title'>桌台状态: </span>
+				<span class = 'c-info-content'>
+					{{ selectRoomItem.status | statusPipe }}
+				</span>
+			</div>
 		</div>
-		<div class = 'section-info'>
-			<span>z桌台状态: </span>
-			<span>{{ selectRoomItem.typeInfo.name }}</span>
-		</div>
+
+		<form [formGroup]="form">
+			<div class = 'c-flex-row-space section-block'>
+				<div>
+					<span class = 'c-info-title c-required'>客户姓名: </span>
+					<input type="text" class = 'c-info-input' formControlName="name" placeholder="客户姓名">
+				</div>
+				<div>
+					<span class = 'c-info-title c-required'>客户电话: </span>
+					<input type="text" class = 'c-info-input' formControlName="tel" placeholder="客户电话">
+				</div>
+			</div>
+
+			<div class = 'c-flex-row-space section-block'>
+				<div>
+					<span class = 'c-info-title c-required'>到店时间: </span>
+					<nz-time-picker
+						nzFormat="HH:mm" class = 'time-picker'
+						nzPlaceHolder = '到店时间'
+						formControlName="reserveDate"
+					></nz-time-picker>
+				</div>
+				<div>
+					<span class = 'c-info-title'>预约人数: </span>
+					<input type="text" class = 'c-info-input' formControlName="num" placeholder="预约人数">
+				</div>
+			</div>
+
+
+			<div class = 'c-flex-row-space section-block'>
+				<div>
+					<span class = 'c-info-title'>销售经理: </span>
+					<nz-select
+						class = 'manager-select' nzPlaceHolder='请选择销售经理'
+					    formControlName="createUser" id="createUser"
+						nzAllowClear
+					>
+						<nz-option
+								*ngFor='let item of ENUM_Manager;'
+								[nzValue]="item.value"
+								[nzLabel]="item.key"
+						>
+						</nz-option>
+					</nz-select>
+				</div>
+				<div>
+					<span class = 'c-info-title'>预定时间: </span>
+					<span  class = 'c-info-content'>
+						{{ form.value.createTime | datePie }}
+					</span>
+				</div>
+			</div>
+
+			<div class = 'section-block'>
+				<span class = 'c-info-title'>备注: </span>
+				<input type="text" class = 'c-info-input' formControlName="remark" placeholder="备注" style="flex:1">
+			</div>
+		</form>
 	</ng-template>
 
 	<ng-template #modalFooter>
@@ -146,11 +220,23 @@
 		>
 			取消安排
 		</button>
+		<button nz-button class = 'status_edit' (click) = 'changeBook($event)'
+				*ngIf="selectRoomItem.status === 2"
+		>
+			修改信息
+		</button>
 		<button nz-button class = 'status_4' (click) = 'open($event)'
 		    *ngIf="selectRoomItem.status === 1 || selectRoomItem.status === 2 || selectRoomItem.status === 3"
 		>
 			开台
 		</button>
+
+		<button nz-button class = 'status_2' (click) = 'directBook($event)'
+				*ngIf="selectRoomItem.status === 1"
+		>
+			预定
+		</button>
+
 		<button nz-button class = 'status_5' (click) = 'clean($event)'
 		        *ngIf="selectRoomItem.status === 4"
 		>
@@ -187,7 +273,6 @@
 			#commonRoomClassifyComponent type = 'type'
 			(select)="roomSelect($event)"
 		>
-
 		</common-room-classify>
 	</ng-template>
 

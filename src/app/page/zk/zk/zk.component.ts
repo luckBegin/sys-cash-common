@@ -13,7 +13,7 @@ export class SysZkComponent implements OnInit{
 		this.tabChange(0);
 	}
 
-	@ViewChild("zkPlacementComponent") zkPlacementComponent: ZkPlacementComponent
+	@ViewChild('zkPlacementComponent') zkPlacementComponent: ZkPlacementComponent
 	public tabChange($event): void {
 		this.zkPlacementComponent.init($event);
 	}

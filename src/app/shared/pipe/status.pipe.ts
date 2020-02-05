@@ -1,5 +1,5 @@
 import { Pipe , PipeTransform } from '@angular/core';
-import {RoomListService} from "../../service/room/room-list.service";
+import {RoomListService} from '../../service/room/room-list.service';
 
 @Pipe({
 	name: 'statusPipe' ,

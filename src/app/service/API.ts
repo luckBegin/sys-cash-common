@@ -3,12 +3,13 @@ export const HOST: string = 'http://localhost:3002';
 const system = {
 	staff: HOST + '/system/staff',
 	changePass: HOST + '/system/staff/changePass',
+	manager: HOST + '/business/manager'
 };
 
 const room = {
 	order: HOST + '/room/order',
 	list: HOST + '/room/list',
-	book:HOST + '/room/book',
+	book: HOST + '/room/book',
 	operate: HOST + '/room/operate'
 };
 

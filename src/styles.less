@@ -115,14 +115,15 @@
 }
 
 .c-required::before {
-	display: inline-block;
 	margin-right: 4px;
 	content: "*";
 	line-height: 1;
 	font-size: 14px;
 	color: #f5222d;
+	position: absolute;
+	left: -12px;
+	top: 36%;
 }
-
 
 /* design regular */
 .blue-bg {
@@ -317,4 +318,26 @@
 }
 .modal-empty .ant-modal-body{
 	padding: 0 ;
+}
+
+.c-info-title{
+	color:#b1b1b1;
+	margin-right: 10px;
+	width: 60px;
+	display: block;
+	position: relative;
+}
+
+.c-info-content{
+	color:#e374b9;
+	margin-left: 10px;
+}
+.c-info-input{
+	background: #444;
+	color: #e374b9;
+	text-indent: 10px;
+	border: none;
+	border-radius: 5px;
+	height: 32px;
+	line-height: 32px;
 }

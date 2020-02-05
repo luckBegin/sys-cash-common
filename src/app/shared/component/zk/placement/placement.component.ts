@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ENUM, RESPONSE} from '../../../../models';
 import {interval, Subscription} from 'rxjs';
 import {CONFIG} from '../../../../CONFIG';
-import {AdaptorUtils} from '../../../utils';
-import {MsgService} from '../../../../service';
+import {AdaptorUtils, DateUtils} from '../../../utils';
+import {MsgService, StaffService} from '../../../../service';
 import {EnumService} from '../../../../service/enum/enum.service';
 import {RoomListService} from '../../../../service/room/room-list.service';
 import {RoomBookService} from '../../../../service/room/room-book.service';
@@ -11,6 +11,8 @@ import {RoomOperateService} from '../../../../service/room/room-operate.service'
 import {Service} from '../../../../../decorators';
 import {BookQueryModel} from './query.model';
 import {CommonRoomClassifyComponent} from '../../room-classify/room-classify.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CommonValidator} from '../../../validators/common.validator';
 
 @Component({
 	selector: 'zk-placement',
@@ -23,10 +25,13 @@ export class ZkPlacementComponent implements OnInit {
 		private readonly enumSer: EnumService,
 		private readonly listSer: RoomListService,
 		private readonly bookSer: RoomBookService ,
-		private readonly roomOperateSer: RoomOperateService
+		private readonly roomOperateSer: RoomOperateService ,
+		private readonly fb: FormBuilder ,
+		private readonly staffService: StaffService
 	) {}
 
 	ngOnInit(): void {
+
 	}
 
 	private ajaxTimer$: Subscription;
@@ -81,6 +86,7 @@ export class ZkPlacementComponent implements OnInit {
 				});
 
 				const areaList = [];
+
 				Object.keys(area).forEach(key => {
 					const item = area[key];
 					const status = room_status(item.data);
@@ -124,6 +130,8 @@ export class ZkPlacementComponent implements OnInit {
 		if (type === 0) {
 			this.getENUMS();
 			this.getBookList() ;
+			this.getManagerList();
+			// TODO timer
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
 					// this.getBookList()
@@ -143,8 +151,7 @@ export class ZkPlacementComponent implements OnInit {
 		this.active_type = type;
 		this.classifyENUM = this.ENUMS[type];
 		if (this.list_raw.area.length > 0 && this.list_raw.area.length > 0) {
-			this.classify_active = '';
-			this.switchClassifyType(type);
+			this.switchClassifyType('');
 		}
 	}
 
@@ -162,6 +169,13 @@ export class ZkPlacementComponent implements OnInit {
 		if (this.selectRoomItem.id === item.id) {
 			this.selectRoomItem = item ;
 			this.roomOperateModal = true;
+
+			if (this.selectRoomItem.bookInfo) {
+				this.selectRoomItem.bookInfo.reserveDate = new Date(this.selectRoomItem.bookInfo.reserveDate);
+				this.form.patchValue(this.selectRoomItem.bookInfo) ;
+			} else {
+				this.form.reset() ;
+			}
 		} else {
 			this.selectRoomItem = item;
 		}
@@ -256,6 +270,81 @@ export class ZkPlacementComponent implements OnInit {
 		this.roomOperateModal = false ;
 		this.msg.success('操作成功') ;
 	}
+
+	private form: FormGroup = this.fb.group({
+		id: [null] ,
+		name: [ null , [ Validators.required ]] ,
+		num: [ null ],
+		tel: [null, [ CommonValidator.isTel ] ],
+		reserveDate: [ null , [ Validators.required ]],
+		createTime: [ null ],
+		createUser: [ null , ],
+		remark: [ null ]
+	});
+
+	public ENUM_Manager: ENUM[] = [];
+
+	private getManagerList(): void {
+		this.staffService.managerAllList()
+			.subscribe((res: RESPONSE) => {
+				this.ENUM_Manager = AdaptorUtils.reflect( res.data , {
+					name: 'key' ,
+					staffId: 'value'
+				});
+			});
+	}
+
+	@Service('bookSer.direct' , true , function() {
+		if ( !(this as ZkPlacementComponent).form.valid ) {
+			(this as ZkPlacementComponent).msg.warn('请填写每项信息') ;
+			return false;
+		}
+		const val = (this as ZkPlacementComponent).form.value ;
+		const date = DateUtils.timeFix( val.reserveDate );
+		val.reserveDate = DateUtils.format(date, 'y-m-d h:i:s') ;
+		val.typeId = (this as ZkPlacementComponent).selectRoomItem.typeId ;
+		val.roomId = (this as ZkPlacementComponent).selectRoomItem.id ;
+		return  val ;
+	})
+	public directBook($event: MouseEvent): void {
+		this.getBookList() ;
+		this.getList() ;
+		this.roomOperateModal = false ;
+		this.msg.success('操作成功') ;
+	}
+
+	@Service('bookSer.put' , true , function() {
+		if ( !(this as ZkPlacementComponent).form.valid ) {
+			(this as ZkPlacementComponent).msg.warn('请填写每项信息') ;
+			return false;
+		}
+		const val = (this as ZkPlacementComponent).form.value ;
+		const date = DateUtils.timeFix( val.reserveDate );
+		val.reserveDate = DateUtils.format(date, 'y-m-d h:i:s') ;
+		return {
+			id: val.id ,
+			name: val.name ,
+			num: val.num,
+			tel: val.tel,
+			reserveDate: val.reserveDate,
+			createUser: val.createUser,
+			remark: val.remark
+		};
+	})
+	public changeBook($event: MouseEvent): void {
+		this.getBookList() ;
+		this.getList() ;
+		this.roomOperateModal = false ;
+		this.msg.success('操作成功') ;
+	}
+
+	public bookCancel($event: any): void {
+		this.bookSer.put(({ id: $event.id , status: 1 }))
+			.subscribe( (res: RESPONSE) => {
+				this.msg.success('操作成功') ;
+				this.getBookList() ;
+			});
+	}
 }
 
 const room_status = (list: any[]): any => {
@@ -272,6 +361,7 @@ const room_status = (list: any[]): any => {
 	});
 	return map;
 };
+
 const objMerge = (obj: any, target: any): any => {
 	const map = {};
 	Object.keys(obj).forEach(key => {
