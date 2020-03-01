@@ -32,7 +32,6 @@ export function Service(serviceName: string, prevent: boolean, data: Function) {
 					}
 
 					el.disabled = false;
-
 					return res.success === true;
 				}))
 				.subscribe(() => {

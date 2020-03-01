@@ -1,5 +1,5 @@
 import {ObjToQuery} from '../app/service/ObjToQuery';
-import {Observable} from 'rxjs';
+import {observable, Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {RESPONSE} from '../app/models';
 import {HttpHeaders} from '@angular/common/http';
@@ -29,6 +29,7 @@ export function GET(url: string, msg: string = '获取数据失败,原因 : '): 
 						filter((res: RESPONSE) => {
 							if ( res.success === false ) {
 								this.msg.error(msg + res.message);
+								obsr.error( res.message ) ;
 							}
 							return res.success === true;
 						}),
@@ -48,7 +49,6 @@ export function POST(url: string, json: boolean = true, msg: string = '提交失
 		const raw = descriptor.value;
 		descriptor.value = function(...arg) {
 			const data = DTO.create(arg[0]);
-			console.log( data ) ;
 			const headers = new HttpHeaders();
 			if ( json ) {
 				headers.append('Content-type', 'application/json');
@@ -58,7 +58,8 @@ export function POST(url: string, json: boolean = true, msg: string = '提交失
 					.pipe(
 						filter((res: RESPONSE) => {
 							if ( res.success === false ) {
-								this.msg.error(msg + res.message);
+								this.msg.error(msg + res.message) ;
+								obsr.error( res.message ) ;
 							}
 							return res.success === true;
 						}),
@@ -90,6 +91,7 @@ export function PUT(url: string, withId: boolean = false, msg: string = '保存�
 
 							if ( res.success === false ) {
 								this.msg.error(msg + res.message);
+								obsr.error( res.message ) ;
 							}
 							return res.success === true;
 						}),
@@ -114,6 +116,7 @@ export function DELETE(url: string, msg: string = '删除失败,原因 : '): Met
 						filter((res: RESPONSE) => {
 							if ( res.success === false ) {
 								this.msg.error(msg + res.message);
+								obsr.error( res.message ) ;
 							}
 							return res.success === true;
 						}),

@@ -208,8 +208,11 @@ export class ZkPlacementComponent implements OnInit {
 	}
 
 	@Service('roomOperateSer.open' , true , function() {
-		const id = (this as ZkPlacementComponent).selectRoomItem.id ;
-		return { id } ;
+		const roomInfo = (this as ZkPlacementComponent).selectRoomItem ;
+		return {
+			id: roomInfo.id,
+			remark: roomInfo.bookInfo ? roomInfo.bookInfo.remark : ''
+		} ;
 	})
 	public open($event: MouseEvent): void {
 		this.msg.success('操作成功') ;
