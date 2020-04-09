@@ -7,11 +7,13 @@ class DateDeal {
 	}
 
 	static transtoTimeStamp = function(dataStr: string | number | Date) {
-		if (DateDeal.isDateStr(dataStr as string))
+		if (DateDeal.isDateStr(dataStr as string)) {
 			return (new Date(dataStr)).getTime();
+		}
 
-		if (dataStr instanceof Date)
+		if (dataStr instanceof Date) {
 			return dataStr.getTime();
+		}
 
 		return dataStr;
 	};
@@ -34,8 +36,9 @@ class DateDeal {
 
 	format(dateStr: any, format: string = 'y-m-d h:i:s') {
 
-		if (!dateStr)
+		if (!dateStr) {
 			return null;
+		}
 
 		const isStamp = /^\d+$/g;
 
@@ -75,8 +78,9 @@ class DateDeal {
 
 	getTimeZone(timeZone: any, format: string = 'y-m-d h:i:s', timeStamp: any = Date.now()) {
 
-		if (timeZone)
+		if (timeZone) {
 			return null;
+		}
 
 		const date = new Date();
 
@@ -114,7 +118,7 @@ class DateDeal {
 		6: '星期六',
 	};
 
-	getCurrentWeek(): any{
+	getCurrentWeek(): any {
 		const date = new Date();
 		return {
 			week: date.getDay() ,
@@ -144,7 +148,7 @@ class DateDeal {
 		return { d , h , m , s } ;
 	}
 
-	timeDiff( startTime: string  | number , endTime: string | number ): { d: number , h: number , m: number , s: number}{
+	timeDiff( startTime: string  | number , endTime: string | number ): { d: number , h: number , m: number , s: number} {
 		const startDate  = this.format( Date.now() , 'y-m-d') + ' ' + RegUtils.delimiter( startTime , 2 , ':') + ':00' ;
 		let endDate = null ;
 		if ( endTime < startTime ) {
