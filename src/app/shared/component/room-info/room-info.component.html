@@ -1,0 +1,70 @@
+<div *ngIf="roomInfo.status === 2">
+	<div class = 'c-flex-row-space section-block'>
+		<div>
+			<span class = 'c-info-title'>桌台类型: </span>
+			<span  class = 'c-info-content'>
+				{{ roomInfo.typeInfo.name | nullPipe }}
+			</span>
+		</div>
+		<div>
+			<span class = 'c-info-title'>桌台状态: </span>
+			<span class = 'c-info-content'>
+			{{ roomInfo.status | statusPipe }}
+		</span>
+		</div>
+	</div>
+
+	<div class = 'c-flex-row-space section-block'>
+		<div>
+			<span class = 'c-info-title'>客户姓名: </span>
+			<span class = 'c-info-content'>
+				{{ roomInfo.bookInfo.name | nullPipe }}
+			</span>
+		</div>
+		<div>
+			<span class = 'c-info-title'>客户电话: </span>
+			<span class = 'c-info-content'>
+				{{ roomInfo.bookInfo.tel | nullPipe }}
+			</span>
+		</div>
+	</div>
+
+	<div class = 'c-flex-row-space section-block'>
+		<div>
+			<span class = 'c-info-title'>到店时间: </span>
+			<span  class = 'c-info-content'>
+				{{ roomInfo.bookInfo.reserveDate | datePie }}
+			</span>
+		</div>
+		<div>
+			<span class = 'c-info-title'>预约人数: </span>
+			<span class = 'c-info-content'>
+				{{ roomInfo.bookInfo.num | nullPipe }}
+			</span>
+		</div>
+	</div>
+
+	<div class = 'c-flex-row-space section-block'>
+		<div>
+			<span class = 'c-info-title'>销售经理: </span>
+			<span  class = 'c-info-content'>
+				{{ roomInfo.bookInfo.managerName | nullPipe }}
+			</span>
+		</div>
+		<div>
+			<span class = 'c-info-title'>预定时间: </span>
+			<span class = 'c-info-content'>
+				{{ roomInfo.bookInfo.createTime | datePie }}
+			</span>
+		</div>
+	</div>
+
+	<div class = 'c-flex-row-space section-block'>
+		<div style="width: 100%;">
+			<span class = 'c-info-title'>备注: </span>
+			<span  class = 'c-info-content'>
+				{{ roomInfo.bookInfo.remark | nullPipe }}
+			</span>
+		</div>
+	</div>
+</div>

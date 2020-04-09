@@ -76,7 +76,7 @@
 	[nzFooter]="modalFooter"
 	(nzOnCancel)="roomOperateModal = false"
 	*ngIf="selectRoomItem.id"
-	nzWidth="60%"
+	nzWidth="700"
 	class = 'common-modal'
 >
 	<ng-template #modalTitle>
@@ -96,7 +96,7 @@
 	</ng-template>
 
 	<ng-template #modalContent>
-
+		<common-room-info [roomInfo]="selectRoomItem"></common-room-info>
 	</ng-template>
 
 	<ng-template #modalFooter>
