@@ -20,6 +20,7 @@ export class CommonRoomInfoComponent implements OnInit, OnChanges{
 	}
 
 	@Input() roomInfo: any ;
+	@Input() allowEdit: boolean = true;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if ( changes.roomInfo ) {
@@ -62,7 +63,7 @@ export class CommonRoomInfoComponent implements OnInit, OnChanges{
 				this.form.reset() ;
 			}
 
-			if ( this.roomInfo.status === 2 ) {
+			if ( this.roomInfo.status === 2 && this.allowEdit === true ) {
 				this.form.enable() ;
 			} else {
 				this.form.disable() ;
