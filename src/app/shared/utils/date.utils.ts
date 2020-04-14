@@ -160,8 +160,9 @@ class DateDeal {
 		return this.dateDiff( startDate, endDate )  ;
 	}
 
-	timeFix(time: Date): Date {
-		if ( this.campare( time.getTime() , Date.now() )) {
+	timeFix(date: Date): Date {
+		const time = typeof date === 'string' ? new Date(date) : date ;
+		if ( this.campare( time.getTime() , Date.now() ) && time ) {
 			const timeStamp = this.timeStampAdd( 1 ) + time.getTime() ;
 			const _date = new Date();
 			_date.setTime(timeStamp);

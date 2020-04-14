@@ -13,6 +13,7 @@ import {BookQueryModel} from './query.model';
 import {CommonRoomClassifyComponent} from '../../room-classify/room-classify.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CommonValidator} from '../../../validators/common.validator';
+import {CommonRoomInfoComponent} from '../../room-info/room-info.component';
 
 @Component({
 	selector: 'zk-placement',
@@ -26,14 +27,12 @@ export class ZkPlacementComponent implements OnInit {
 		private readonly listSer: RoomListService,
 		private readonly bookSer: RoomBookService ,
 		private readonly roomOperateSer: RoomOperateService ,
-		private readonly fb: FormBuilder ,
 		private readonly staffService: StaffService
 	) {}
 
 	ngOnInit(): void {
 
 	}
-
 	private ajaxTimer$: Subscription;
 
 	private ENUMS: { area: ENUM[], type: ENUM[] } = {area: [], type: []};
@@ -130,7 +129,6 @@ export class ZkPlacementComponent implements OnInit {
 		if (type === 0) {
 			this.getENUMS();
 			this.getBookList() ;
-			this.getManagerList();
 			// TODO timer
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
@@ -171,21 +169,12 @@ export class ZkPlacementComponent implements OnInit {
 			this.roomOperateModal = true;
 			if (this.selectRoomItem.bookInfo) {
 				this.selectRoomItem.bookInfo.reserveDate = new Date(this.selectRoomItem.bookInfo.reserveDate);
-				this.form.patchValue(this.selectRoomItem.bookInfo) ;
-				if ( this.selectRoomItem.status !== 2) {
-					this.form.disable() ;
-				} else {
-					this.form.enable() ;
-				}
-			} else {
-				this.form.reset() ;
-				this.form.enable() ;
 			}
 		} else {
 			this.selectRoomItem = item;
 		}
 	}
-	
+
 	public bookQueryModel: BookQueryModel = new BookQueryModel();
 	private query: any = {} ;
 	public getBookList(): void {
@@ -279,35 +268,13 @@ export class ZkPlacementComponent implements OnInit {
 		this.msg.success('操作成功') ;
 	}
 
-	private form: FormGroup = this.fb.group({
-		id: [null] ,
-		name: [ null , [ Validators.required ]] ,
-		num: [ null ],
-		tel: [null, [ CommonValidator.isTel ] ],
-		reserveDate: [ null , [ Validators.required ]],
-		createTime: [ null ],
-		createUser: [ null , ],
-		remark: [ null ]
-	});
-
-	public ENUM_Manager: ENUM[] = [];
-
-	private getManagerList(): void {
-		this.staffService.managerAllList()
-			.subscribe((res: RESPONSE) => {
-				this.ENUM_Manager = AdaptorUtils.reflect( res.data , {
-					name: 'key' ,
-					staffId: 'value'
-				});
-			});
-	}
-
 	@Service('bookSer.direct' , true , function() {
-		if ( !(this as ZkPlacementComponent).form.valid ) {
+		const form = (this as ZkPlacementComponent).CommonRoomInfoComponent.getForm() ;
+		if ( !form.valid ) {
 			(this as ZkPlacementComponent).msg.warn('请填写每项信息') ;
 			return false;
 		}
-		const val = (this as ZkPlacementComponent).form.value ;
+		const val = form.value ;
 		const date = DateUtils.timeFix( val.reserveDate );
 		val.reserveDate = DateUtils.format(date, 'y-m-d h:i:s') ;
 		val.typeId = (this as ZkPlacementComponent).selectRoomItem.typeId ;
@@ -321,12 +288,16 @@ export class ZkPlacementComponent implements OnInit {
 		this.msg.success('操作成功') ;
 	}
 
+	@ViewChild('commonRoomInfoComponent')
+	CommonRoomInfoComponent: CommonRoomInfoComponent ;
+
 	@Service('bookSer.put' , true , function() {
-		if ( !(this as ZkPlacementComponent).form.valid ) {
+		const form = (this as ZkPlacementComponent).CommonRoomInfoComponent.getForm() ;
+		if ( !form.valid ) {
 			(this as ZkPlacementComponent).msg.warn('请填写每项信息') ;
 			return false;
 		}
-		const val = (this as ZkPlacementComponent).form.value ;
+		const val = form.value ;
 		const date = DateUtils.timeFix( val.reserveDate );
 		val.reserveDate = DateUtils.format(date, 'y-m-d h:i:s') ;
 		return {

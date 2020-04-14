@@ -14,3 +14,63 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+
+.time-picker{
+  width: 140px;
+}
+.time-picker ::ng-deep .ant-time-picker-input{
+  background: #444;
+  border: none;
+}
+
+.time-picker ::ng-deep .ant-time-picker-input::-webkit-input-placeholder,
+.manager-select ::ng-deep .ant-select-selection__placeholder ,
+::ng-deep .ant-select-dropdown-menu-item{
+  color:rgb(117, 117, 117);
+}
+
+::ng-deep .ant-select-dropdown-menu-item{
+  color:#e0e0e0
+}
+::ng-deep .ant-select-dropdown-menu-item:hover{
+  background-color: #6b6b6b;
+}
+::ng-deep .ant-time-picker-panel-input ,
+.time-picker ::ng-deep .ant-time-picker-input ,
+.manager-select ::ng-deep .ant-select-selection-selected-value{
+  color: #e374b9 !important;
+}
+
+::ng-deep .ant-time-picker-panel-inner,
+::ng-deep .ant-time-picker-panel-input-wrap>input ,
+::ng-deep .ant-time-picker-panel-select-option-selected ,
+.manager-select ::ng-deep .ant-select-selection ,
+::ng-deep .ant-select-dropdown{
+  background-color: #444 !important;
+  border: none ;
+}
+
+::ng-deep .ant-time-picker-panel-select li{
+  color: #ccc !important;
+}
+
+.manager-select{
+  width: 140px;
+}
+.status_edit{
+  background: #4c6aff !important;
+  color: #f2f6fa;
+  border-color: transparent !important;
+}
+.book-item-delete{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #9c0606;
+  font-size: 17px;
+  transition: color .2s ease-in;
+}
+.book-item-delete:hover{
+  color:#a91616;
+}

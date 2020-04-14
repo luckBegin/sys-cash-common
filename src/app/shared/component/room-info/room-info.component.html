@@ -1,70 +1,58 @@
-<div *ngIf="roomInfo.status === 2">
+<form [formGroup]="form">
 	<div class = 'c-flex-row-space section-block'>
 		<div>
-			<span class = 'c-info-title'>桌台类型: </span>
-			<span  class = 'c-info-content'>
-				{{ roomInfo.typeInfo.name | nullPipe }}
-			</span>
+			<span class = 'c-info-title c-required'>客户姓名: </span>
+			<input type="text" class = 'c-info-input' formControlName="name" placeholder="客户姓名">
 		</div>
 		<div>
-			<span class = 'c-info-title'>桌台状态: </span>
-			<span class = 'c-info-content'>
-			{{ roomInfo.status | statusPipe }}
-		</span>
+			<span class = 'c-info-title c-required'>客户电话: </span>
+			<input  type="text" class = 'c-info-input' formControlName="tel" placeholder="客户电话">
 		</div>
 	</div>
 
 	<div class = 'c-flex-row-space section-block'>
 		<div>
-			<span class = 'c-info-title'>客户姓名: </span>
-			<span class = 'c-info-content'>
-				{{ roomInfo.bookInfo.name | nullPipe }}
-			</span>
-		</div>
-		<div>
-			<span class = 'c-info-title'>客户电话: </span>
-			<span class = 'c-info-content'>
-				{{ roomInfo.bookInfo.tel | nullPipe }}
-			</span>
-		</div>
-	</div>
-
-	<div class = 'c-flex-row-space section-block'>
-		<div>
-			<span class = 'c-info-title'>到店时间: </span>
-			<span  class = 'c-info-content'>
-				{{ roomInfo.bookInfo.reserveDate | datePie }}
-			</span>
+			<span class = 'c-info-title c-required'>到店时间: </span>
+			<nz-time-picker
+					nzFormat="HH:mm" class = 'time-picker'
+					nzPlaceHolder = '到店时间'
+					formControlName="reserveDate"
+					nzAllowEmpty = "false"
+			></nz-time-picker>
 		</div>
 		<div>
 			<span class = 'c-info-title'>预约人数: </span>
-			<span class = 'c-info-content'>
-				{{ roomInfo.bookInfo.num | nullPipe }}
-			</span>
+			<input type="text" class = 'c-info-input' formControlName="num" placeholder="预约人数">
 		</div>
 	</div>
+
 
 	<div class = 'c-flex-row-space section-block'>
 		<div>
 			<span class = 'c-info-title'>销售经理: </span>
-			<span  class = 'c-info-content'>
-				{{ roomInfo.bookInfo.managerName | nullPipe }}
-			</span>
+			<nz-select
+					class = 'manager-select' nzPlaceHolder='请选择销售经理'
+					formControlName="createUser" id="createUser"
+					nzAllowClear
+			>
+				<nz-option
+						*ngFor='let item of ENUM_Manager;'
+						[nzValue]="item.value"
+						[nzLabel]="item.key"
+				>
+				</nz-option>
+			</nz-select>
 		</div>
 		<div>
 			<span class = 'c-info-title'>预定时间: </span>
-			<span class = 'c-info-content'>
-				{{ roomInfo.bookInfo.createTime | datePie }}
-			</span>
+			<span  class = 'c-info-content'>
+						{{ form.value.createTime | datePie }}
+					</span>
 		</div>
 	</div>
 
-	<div class = 'c-flex-row-space section-block'>
-		<div style="width: 100%;">
-			<span class = 'c-info-title'>备注: </span>
-			<span  class = 'c-info-content'>
-				{{ roomInfo.bookInfo.remark | nullPipe }}
-			</span>
-		</div>
+	<div class = 'section-block'>
+		<span class = 'c-info-title'>备注: </span>
+		<input type="text" class = 'c-info-input' formControlName="remark" placeholder="备注" style="flex:1">
 	</div>
-</div>
+</form>
