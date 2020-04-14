@@ -169,18 +169,23 @@ export class ZkPlacementComponent implements OnInit {
 		if (this.selectRoomItem.id === item.id) {
 			this.selectRoomItem = item ;
 			this.roomOperateModal = true;
-
 			if (this.selectRoomItem.bookInfo) {
 				this.selectRoomItem.bookInfo.reserveDate = new Date(this.selectRoomItem.bookInfo.reserveDate);
 				this.form.patchValue(this.selectRoomItem.bookInfo) ;
+				if ( this.selectRoomItem.status !== 2) {
+					this.form.disable() ;
+				} else {
+					this.form.enable() ;
+				}
 			} else {
 				this.form.reset() ;
+				this.form.enable() ;
 			}
 		} else {
 			this.selectRoomItem = item;
 		}
 	}
-
+	
 	public bookQueryModel: BookQueryModel = new BookQueryModel();
 	private query: any = {} ;
 	public getBookList(): void {

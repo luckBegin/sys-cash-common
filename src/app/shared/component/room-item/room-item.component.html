@@ -60,6 +60,22 @@
 
 	<!-- 消费 -->
 	<div class="status_4 content" *ngIf="data.status === 4">
+		<div class="c-flex-row-space content-row">
+			<div>
+				姓名: {{ data.bookInfo.name | nullPipe }}
+			</div>
+			<div>
+				手机: {{ data.bookInfo.tel | nullPipe }}
+			</div>
+		</div>
+		<div class = 'c-flex-row-space content-row'>
+			<div>
+				销售经理: {{ data.bookInfo.managerName | nullPipe }}
+			</div>
+			<div>
+				经理电话: {{ data.bookInfo.managerTel | nullPipe }}
+			</div>
+		</div>
 		<div class="mark">
 			备注: {{ data.orderInfo.remark | nullPipe }}
 		</div>
