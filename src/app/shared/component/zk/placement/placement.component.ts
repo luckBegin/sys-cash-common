@@ -14,7 +14,7 @@ import {CommonRoomClassifyComponent} from '../../room-classify/room-classify.com
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CommonValidator} from '../../../validators/common.validator';
 import {CommonRoomInfoComponent} from '../../room-info/room-info.component';
-
+``
 @Component({
 	selector: 'zk-placement',
 	templateUrl: './placement.component.html',

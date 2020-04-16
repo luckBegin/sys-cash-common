@@ -10,7 +10,8 @@ const room = {
 	order: HOST + '/room/order',
 	list: HOST + '/room/list',
 	book: HOST + '/room/book',
-	operate: HOST + '/room/operate'
+	operate: HOST + '/room/operate' ,
+	orderItem: HOST + '/room/orderItem'
 };
 
 const calc = {
@@ -39,7 +40,7 @@ const vip = {
 
 const enumUrl = {
 	typeAndArea: HOST + '/enum/typeAndArea'
-}
+};
 
 const WSUrl: string = 'ws://localhost:3333';
 

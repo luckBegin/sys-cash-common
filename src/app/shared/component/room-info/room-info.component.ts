@@ -63,7 +63,10 @@ export class CommonRoomInfoComponent implements OnInit, OnChanges{
 				this.form.reset() ;
 			}
 
-			if ( this.roomInfo.status === 2 && this.allowEdit === true ) {
+			if (
+				( this.roomInfo.status === 2 || this.roomInfo.status === 1)
+				&& this.allowEdit === true
+			) {
 				this.form.enable() ;
 			} else {
 				this.form.disable() ;

@@ -17,6 +17,7 @@ export class CashOrderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.statusENUM = RoomOrderService.ENUM_Status ;
+		this.getList() ;
 	}
 
 	public statusENUM: ENUM[] = [] ;
@@ -39,5 +40,19 @@ export class CashOrderComponent implements OnInit {
 	public changeStatus( status: number | string ): void {
 		this.queryModel.status = status ;
 		this.getList() ;
+	}
+
+	public orderItemList: any[] = [] ;
+	public orderItemSelect: any = {} ;
+	public orderSelect( item ) {
+		this.orderItemList = item ;
+		this.service.getItemList({ orderId: item.id })
+			.pipe(
+				filter( (res: RESPONSE) => res.success),
+				map( (res: RESPONSE) => res.data )
+			)
+			.subscribe( (res: any[]) => {
+				this.orderItemList = res ;
+			});
 	}
 }

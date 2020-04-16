@@ -25,20 +25,21 @@ export class LoginComponent implements OnInit {
 		private readonly wxSer: WeChatService
 	) {
 	}
-	
+
 	form: FormGroup = this.fb.group({
 		username: [null, [Validators.required]],
 		password: [null, [Validators.required]]
 	});
-	
+
 	qrStr: string = '';
 	private loginKey: string = '';
 	private wxLoginEvent$;
 	private CONFIG = CONFIG ;
 	ngOnInit(): void {
-		this.getQrCode();
+		// TODO 删除注释
+		// this.getQrCode();
 	}
-	
+
 	@Service('service.login', true, function() {
 		const THIS = this as LoginComponent;
 		if (!THIS.form.valid) {
@@ -52,17 +53,20 @@ export class LoginComponent implements OnInit {
 		}
 	})
 	login($event: MouseEvent, res?: RESPONSE): void {
-		this.wxLoginEvent$.unsubscribe();
+		if ( this.wxLoginEvent$ ) {
+			this.wxLoginEvent$.unsubscribe();
+		}
+
 		const menu = res.data.menuInfo[1].children as any[];
 		if (menu.length <= 0) {
 			this.msg.warn('该账号不具备任何权限,请联系管理人员');
 			return;
 		}
 		this.sgo.set('loginInfo', res.data);
-		
+
 		this.router.navigate(['/prelogin']);
 	}
-	
+
 	getQrCode(): void {
 		this.wxSer.getQrCode()
 		.subscribe((res: RESPONSE) => {
@@ -76,7 +80,7 @@ export class LoginComponent implements OnInit {
 			}
 		});
 	}
-	
+
 	onWxLogin(): void {
 		this.service.qrLogin({code: this.loginKey})
 		.subscribe((res: RESPONSE) => {

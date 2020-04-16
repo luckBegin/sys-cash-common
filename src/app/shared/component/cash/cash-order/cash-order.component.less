@@ -1,41 +1,88 @@
-.order-container{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content:flex-start;
-  align-content: center;
+.order-container {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-content: center;
 }
-.left ,
-.middle ,
+
+.left,
+.middle,
 .right {
-  height: 100%;
-  overflow-y: scroll;
+	height: 100%;
+	overflow-y: scroll;
 }
-.left{
-  width: 150px;
-  border-right: 1px solid #e8e8e8;
-  box-sizing: border-box;
+
+.left {
+	width: 150px;
+	border-right: 1px solid #e8e8e8;
+	box-sizing: border-box;
 }
-.middle{
-  flex: 1;
+
+.middle {
+	flex: 1;
+	padding: 20px 10px;
 }
-.right{
-  width: 250px;
+
+.right {
+	width: 250px;
 }
-.order-status{
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
-  transition: all .2s ease-in;
-  border-bottom: 1px solid #525252;
-  color:#fff;
-  cursor: pointer;
-  background: rgb(46, 53, 36)
+
+.order-status {
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	transition: all .2s ease-in;
+	border-bottom: 1px solid #525252;
+	color: #fff;
+	cursor: pointer;
+	background: rgb(46, 53, 36)
 }
-.order-status:hover ,
-.order-status-active{
-  background: rgb(19, 26, 44);
+
+.order-status:hover,
+.order-status-active {
+	background: rgb(19, 26, 44);
+}
+
+.order-list-wrapper {
+	border: 1px solid #cccccc2b;
+	border-radius: 5px;
+	padding: 10px;
+	color: #e3e4e2;
+	background: #333a29;
+	box-shadow: 0 1px 3px rgba(62, 62, 62, 0.75);
+	cursor: pointer;
+	transition: all .2s ease;
+
+	& .room-title {
+		margin-left: 20px;
+		font-weight: bolder;
+	}
+
+	& .room-order {
+        margin-left: 20px;
+        color: #b3b3b3
+	}
+
+	& .status-mark{
+		width: 75px;
+		border-radius: 5px;
+		text-align: right;
+
+		& span{
+			display: block;
+			padding: 2px 5px;
+			border-radius: 5px;
+		}
+	}
+}
+
+.order-list-wrapper:hover {
+	background: #2b2d27;
+}
+.order-list-active{
+	background: red ;
 }

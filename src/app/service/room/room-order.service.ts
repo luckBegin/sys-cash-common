@@ -15,16 +15,19 @@ export class RoomOrderService {
 	}
 
 	static ENUM_Status: ENUM[] = [
-		{ key: '未结算', value: 0 } ,
-		{ key: '已结算', value: 1 } ,
-		{ key: '已签送', value: 2 } ,
-		{ key: '待退签送', value: 3 } ,
-		{ key: '已兑积分', value: 4 } ,
-		{ key: '待退积分', value: 5 } ,
-		{ key: '线上点单', value: 6 } ,
-		{ key: '已退线上', value: 7 } ,
+		{ key: '未结算', value: 1 } ,
+		{ key: '已结算', value: 2 } ,
+		{ key: '已签送', value: 3 } ,
+		{ key: '待退签送', value: 4 } ,
+		{ key: '已兑积分', value: 5 } ,
+		{ key: '待退积分', value: 6 } ,
+		{ key: '线上点单', value: 7 } ,
+		{ key: '已退线上', value: 8 } ,
 	];
 
 	@GET(API.room.order)
 	public getList( para ?: any ): any | Observable< RESPONSE > {}
+
+	@GET(API.room.orderItem )
+	public getItemList( para ?: any ): any | Observable< RESPONSE > {}
 }

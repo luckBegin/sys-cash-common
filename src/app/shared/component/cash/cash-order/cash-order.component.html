@@ -16,7 +16,35 @@
 		</div>
 	</div>
 	<div class="middle scrollWrap">
+		<div
+			class="order-list-wrapper c-flex-row-space"
+			*ngFor="let item of list, let idx = index"
+			nz-tooltip [nzTitle]="'备注:'+ item.remark "
+			(click)="orderSelect(item)"
+			[ngClass]="{'order-list-active': orderItemSelect.id === item.id }"
+		>
+			<div class="c-flex-row-start">
+				<div class = 'room-title'>
+					{{ item.roomInfo.name }}
+				</div>
 
+				<div class = 'room-order'>
+					{{ item.orderNo }}
+				</div>
+			</div>
+
+			<div class = 'c-flex-row-end'>
+				<div style="color: #f08029">
+					{{ item.shouldMoney  | cusCurrency }}
+				</div>
+
+				<div class = 'status-mark c-flex-row-end'>
+					<span [ngClass]="'status_' + item.status">
+						{{ item.status  | OrderStatusPipe }}
+					</span>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="right scrollWrap">
 

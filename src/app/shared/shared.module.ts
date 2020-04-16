@@ -1,6 +1,14 @@
 import {NgModule} from '@angular/core' ;
 import {CommonModule} from '@angular/common' ;
-import {TimePipe, StatusPipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe} from './pipe';
+import {
+	TimePipe,
+	StatusPipe,
+	CusCurrencyPipe,
+	DatePipe,
+	FilterSymbolPipe,
+	DiscountPipe,
+	OrderStatusPipe
+} from './pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {HttpIntercept} from './interceptor.service';
@@ -26,7 +34,16 @@ const components = [
 	CommonRoomClassifyComponent ,
 	CommonRoomInfoComponent
 ];
-const pipes = [StatusPipe, TimePipe, CusCurrencyPipe, DatePipe, FilterSymbolPipe, DiscountPipe , NullPipe ];
+const pipes = [
+	StatusPipe,
+	TimePipe,
+	CusCurrencyPipe,
+	DatePipe,
+	FilterSymbolPipe,
+	DiscountPipe ,
+	NullPipe,
+	OrderStatusPipe
+];
 
 @NgModule({
 	declarations: [
