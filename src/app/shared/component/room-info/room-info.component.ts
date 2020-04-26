@@ -34,6 +34,7 @@ export class CommonRoomInfoComponent implements OnInit, OnChanges{
 		num: [ null ],
 		tel: [null, [ CommonValidator.isTel ] ],
 		reserveDate: [ null , [ Validators.required ]],
+		saleManagerId: [ null ] ,
 		createTime: [ null ],
 		createUser: [ null , ],
 		remark: [ null ]

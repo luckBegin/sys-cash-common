@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ENUM, RESPONSE} from '../../../../models';
 import {interval, Subscription} from 'rxjs';
 import {CONFIG} from '../../../../CONFIG';
-import {AdaptorUtils, DateUtils} from '../../../utils';
+import {AdaptorUtils, DateUtils, ObjectUtils} from '../../../utils';
 import {MsgService, StaffService} from '../../../../service';
 import {EnumService} from '../../../../service/enum/enum.service';
 import {RoomListService} from '../../../../service/room/room-list.service';
@@ -203,10 +203,19 @@ export class ZkPlacementComponent implements OnInit {
 
 	@Service('roomOperateSer.open' , true , function() {
 		const roomInfo = (this as ZkPlacementComponent).selectRoomItem ;
-		return {
+		const bookFormVal = (this as ZkPlacementComponent).CommonRoomInfoComponent.getForm().value ;
+		const data = {
 			id: roomInfo.id,
-			remark: roomInfo.bookInfo ? roomInfo.bookInfo.remark : ''
+			remark: roomInfo.bookInfo ? roomInfo.bookInfo.remark : '' ,
 		} ;
+
+		if( !ObjectUtils.isEmptyObj( bookFormVal ) ) {
+			bookFormVal.typeId = roomInfo.typeInfo.id ;
+			bookFormVal.reserveDate = DateUtils.format(bookFormVal.reserveDate) ;
+			bookFormVal.roomId = roomInfo.id ;
+			data['bookInfo'] = bookFormVal ;
+		}
+		return data ;
 	})
 	public open($event: MouseEvent): void {
 		this.msg.success('操作成功') ;

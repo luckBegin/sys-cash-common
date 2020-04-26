@@ -45,7 +45,7 @@ export class VipService {
 	bindCard(data?: any): Observable<RESPONSE> | any {
 	}
 	
-	@GET( API.vip.integral)
+	@GET(API.vip.integral)
 	integral( para?: any): Observable< RESPONSE > | any {
 	}
 }

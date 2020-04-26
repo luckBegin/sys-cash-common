@@ -22,6 +22,7 @@ import {RoomItemComponent} from './component/room-item/room-item.component';
 import {ZkPlacementComponent} from './component/zk/placement/placement.component';
 import {CommonRoomClassifyComponent} from './component/room-classify/room-classify.component';
 import { CommonRoomInfoComponent } from './component/room-info/room-info.component';
+import {CashOrderItemComponent} from "./component/cash/cash-order-item/cash-order-item.component";
 
 const modules = [CommonModule, FormsModule, NgZorroAntdModule];
 
@@ -32,7 +33,8 @@ const components = [
 	RoomItemComponent,
 	ZkPlacementComponent,
 	CommonRoomClassifyComponent ,
-	CommonRoomInfoComponent
+	CommonRoomInfoComponent ,
+	CashOrderItemComponent
 ];
 const pipes = [
 	StatusPipe,

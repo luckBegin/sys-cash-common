@@ -30,6 +30,7 @@ export class CashComponent implements OnInit {
 
 	private init(type: number) {
 		this.cashRoomComponent.init( type ) ;
+		this.cashOrderComponent.init( type ) ;
 	}
 
 	public tabChange($event: NzTabChangeEvent): void {

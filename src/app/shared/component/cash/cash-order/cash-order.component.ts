@@ -3,6 +3,8 @@ import {MsgService, RoomOrderService} from '../../../../service';
 import {ENUM, RESPONSE} from '../../../../models';
 import {QueryModel} from './query.model';
 import {filter, map} from 'rxjs/operators';
+import {interval, Subscription} from "rxjs";
+import {CONFIG} from "../../../../CONFIG";
 
 @Component({
 	selector: 'cash-order',
@@ -17,7 +19,6 @@ export class CashOrderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.statusENUM = RoomOrderService.ENUM_Status ;
-		this.getList() ;
 	}
 
 	public statusENUM: ENUM[] = [] ;
@@ -25,6 +26,8 @@ export class CashOrderComponent implements OnInit {
 	private queryModel: QueryModel = new QueryModel() ;
 
 	public list: any[] = [] ;
+
+	private ajaxTimer$: Subscription;
 
 	private getList() {
 		this.service.getList(this.queryModel)
@@ -45,7 +48,7 @@ export class CashOrderComponent implements OnInit {
 	public orderItemList: any[] = [] ;
 	public orderItemSelect: any = {} ;
 	public orderSelect( item ) {
-		this.orderItemList = item ;
+		this.orderItemSelect = item ;
 		this.service.getItemList({ orderId: item.id })
 			.pipe(
 				filter( (res: RESPONSE) => res.success),
@@ -54,5 +57,19 @@ export class CashOrderComponent implements OnInit {
 			.subscribe( (res: any[]) => {
 				this.orderItemList = res ;
 			});
+	}
+
+	public init(type: number): void {
+		if (type === 0) {
+			this.getList() ;
+			this.ajaxTimer$ = interval(CONFIG.timer)
+				.subscribe(() => {
+					this.getList()
+				});
+		} else {
+			if (this.ajaxTimer$) {
+				this.ajaxTimer$.unsubscribe();
+			}
+		}
 	}
 }

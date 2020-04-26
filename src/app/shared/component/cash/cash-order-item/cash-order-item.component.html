@@ -1,0 +1,71 @@
+<div class = 'order-item-wrapper'>
+	<div class = 'title'>
+		消费项目
+	</div>
+	<div class="container scrollWrap">
+		<div
+			*ngFor="let item of data" class = 'c-flex-row-space order-item'
+			(click)="addToBack(item)"
+		>
+			<div class = 'c-text-overflow'
+			     nz-tooltip [nzTitle]="'名称: ' +item.name"
+			>{{ item.name }}</div>
+
+			<div class = 'c-text-overflow'
+			     nz-tooltip [nzTitle]="'价格: ¥'+item.shouldMoney"
+			>
+				消费:
+				<span class = 'mark'>
+					{{ item.shouldMoney | cusCurrency }}
+				</span>
+			</div>
+
+			<div class = 'c-text-overflow'
+			     nz-tooltip [nzTitle]="'数量: ' +item.count"
+			>
+				数量:
+				<span class = 'mark'>
+					{{ item.count}}
+				</span>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class = 'order-item-wrapper order-item-back' [formGroup]="form">
+	<div class = 'title'>
+		退单
+	</div>
+	<div class="container scrollWrap"  formArrayName="list">
+		<div
+			*ngFor="let item of list.controls ; let idx = index"
+			class = 'c-flex-row-space order-item'
+			[formGroupName]="idx"
+		>
+			<div class = 'c-text-overflow'
+			>{{ item.value.name }}</div>
+			<div class = 'c-text-overflow'
+			>
+				消费:
+				<span class = 'mark'>
+					{{ item.value.shouldMoney | cusCurrency }}
+				</span>
+			</div>
+
+			<div class = 'c-text-overflow'
+			>
+				数量:
+				<nz-input-number
+					formControlName="count" [nzMin]="0" [nzMax]="item.value.max" [nzStep]="1"
+					class = 'number-input'
+				>
+				</nz-input-number>
+			</div>
+		</div>
+	</div>
+
+	<div class="back-operate c-flex-row-start" [@ngIfAnimate] *ngIf="list.controls.length">
+		<div>退单</div>
+		<div (click)="backCancel()">取消</div>
+	</div>
+</div>

@@ -117,7 +117,7 @@ export class CashRoomComponent implements OnInit {
 			this.getENUMS();
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
-					// this.getList()
+					this.getList()
 				});
 		} else {
 			if (this.ajaxTimer$) {

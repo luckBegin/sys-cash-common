@@ -9,4 +9,16 @@ export const ObjectUtils = {
 
 		return target;
 	},
+	isEmptyObj( obj ): boolean{
+		let emptyMark: boolean = true ;
+
+		for(const keys in obj ) {
+			if( obj.hasOwnProperty(keys) ) {
+				emptyMark = false ;
+				break ;
+			}
+		}
+
+		return emptyMark ;
+	}
 };

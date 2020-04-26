@@ -19,7 +19,7 @@
 		<div
 			class="order-list-wrapper c-flex-row-space"
 			*ngFor="let item of list, let idx = index"
-			nz-tooltip [nzTitle]="'备注:'+ item.remark "
+			nz-tooltip [nzTitle]="'备注:'+ ( item.remark ? item.remark : '无')"
 			(click)="orderSelect(item)"
 			[ngClass]="{'order-list-active': orderItemSelect.id === item.id }"
 		>
@@ -47,6 +47,6 @@
 		</div>
 	</div>
 	<div class="right scrollWrap">
-
+		<cashOrderItem [data] = 'orderItemList'></cashOrderItem>
 	</div>
 </div>

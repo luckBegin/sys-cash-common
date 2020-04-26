@@ -1,0 +1,80 @@
+.order-item-wrapper {
+	width: 100%;
+	height: 50%;
+	position: relative;
+    overflow: hidden;
+	border-bottom: 1px solid rgba(204, 204, 204, 0.3);
+	& .title {
+		padding: 0px 10px ;
+		color: #e3e4e2;
+		background: #333a29;
+		height: 35px;
+		line-height: 35px;
+	}
+
+	& .container{
+		width: 100%;
+		height: calc(100% - 35px);
+		overflow-y: scroll;
+
+		& .order-item{
+			padding: 10px;
+			background: rgba(0, 0, 0, 0.28);
+			color: #e3e4e2;
+			cursor: pointer;
+			transition: all .3s ease-in;
+		}
+
+		& .order-item:hover ,
+		& .order-item-active{
+			background: rgba(0, 0, 0, 0.72);
+		}
+	}
+	& .mark{
+		color:#f08029;
+	}
+}
+
+.order-item-back{
+	padding-bottom: 40px;
+	position: relative;
+
+	& .back-operate{
+		width: 100%;
+		height: 40px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		border-top: 1px solid rgba(204, 204, 204, 0.3);
+		& div{
+			width: 50%;
+			height: 100%;
+			text-align: center;
+			line-height: 40px;
+			cursor: pointer;
+			transition: all .3s ease-in;
+			color: #fff;
+		}
+
+		& div:nth-of-type(1){
+			background: #576346;
+		}
+		& div:nth-of-type(1):hover{
+			background: #333a29
+		}
+
+		& div:nth-of-type(2){
+			background:#afafaf
+		}
+		& div:nth-of-type(2):hover{
+			background: #d0d0d0;
+		}
+	}
+
+	.number-input{
+		width: 50px !important;
+		color: #e3e4e2;
+		background-color: rgba(0, 0, 0, 0.39);
+		border: 1px solid #525252;
+	}
+}
