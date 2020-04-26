@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit {
 	private wxLoginEvent$;
 	private CONFIG = CONFIG ;
 	ngOnInit(): void {
-		// TODO 删除注释
-		// this.getQrCode();
+		this.getQrCode();
 	}
 
 	@Service('service.login', true, function() {
@@ -69,16 +68,16 @@ export class LoginComponent implements OnInit {
 
 	getQrCode(): void {
 		this.wxSer.getQrCode()
-		.subscribe((res: RESPONSE) => {
-			this.qrStr = res.data.qrUrl;
-			this.loginKey = res.data.key;
-			if (!this.wxLoginEvent$) {
-				this.wxLoginEvent$ = interval(2000)
-				.subscribe(sec => {
-					this.onWxLogin();
-				});
-			}
-		});
+			.subscribe((res: RESPONSE) => {
+				this.qrStr = res.data.qrUrl;
+				this.loginKey = res.data.key;
+				if (!this.wxLoginEvent$) {
+					this.wxLoginEvent$ = interval(2000)
+					.subscribe(sec => {
+						this.onWxLogin();
+					});
+				}
+			});
 	}
 
 	onWxLogin(): void {
