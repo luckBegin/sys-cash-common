@@ -134,7 +134,7 @@
 	</div>
 
 	<div class="back-operate c-flex-row-start" [@ngIfAnimate] *ngIf="list.controls.length">
-		<div (click)="backOrder()">退单</div>
+		<div nz-popconfirm nzTitle="确定移除该项?" (nzOnConfirm)="backOrder()">退单</div>
 		<div (click)="backCancel()">取消</div>
 	</div>
 </div>

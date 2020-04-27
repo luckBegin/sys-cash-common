@@ -47,6 +47,6 @@
 		</div>
 	</div>
 	<div class="right scrollWrap">
-		<cashOrderItem [data] = 'orderItemList'></cashOrderItem>
+		<cashOrderItem [data] = 'orderItemList' (operate) = 'orderItemOperate($event)'></cashOrderItem>
 	</div>
 </div>

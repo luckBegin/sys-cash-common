@@ -55,6 +55,7 @@ export class CashOrderComponent implements OnInit {
 				map( (res: RESPONSE) => res.data )
 			)
 			.subscribe( (res: any[]) => {
+				console.log( res ) ;
 				this.orderItemList = res ;
 			});
 	}
@@ -71,5 +72,10 @@ export class CashOrderComponent implements OnInit {
 				this.ajaxTimer$.unsubscribe();
 			}
 		}
+	}
+
+	public orderItemOperate($event:any): void {
+		this.getList() ;
+		this.orderSelect( this.orderItemSelect ) ;
 	}
 }

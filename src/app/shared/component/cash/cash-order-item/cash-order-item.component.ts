@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from "@angular/core";
 import {ngIfAnimation} from "../../../../router/router-animation";
 import {Form, FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {RoomOrderService} from "../../../../service";
+import {MsgService, RoomOrderService} from "../../../../service";
 import {RESPONSE} from "../../../../models";
 
 @Component({
@@ -10,13 +10,23 @@ import {RESPONSE} from "../../../../models";
 	styleUrls: ['./cash-order-item.component.less'] ,
 	animations: [ngIfAnimation]
 })
-export class CashOrderItemComponent implements OnInit{
+export class CashOrderItemComponent implements OnInit , OnChanges{
 	constructor(
 		private readonly fb: FormBuilder ,
-		private readonly orderSer: RoomOrderService
+		private readonly orderSer: RoomOrderService ,
+		private readonly msg: MsgService
 	) {};
 
 	ngOnInit(): void {
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if( changes.data && changes.data.currentValue ) {
+			if( this.checkList ) {
+				const checkNo = this.checkList.checkNo ;
+				this.checkList = changes.data.currentValue.find( item => item.checkNo = checkNo ) ;
+			}
+		}
 	}
 
 	@Input() data: any[] = [];
@@ -69,7 +79,9 @@ export class CashOrderItemComponent implements OnInit{
 		const val = this.list.value ;
 		this.orderSer.backOrder( val )
 			.subscribe( (res: RESPONSE) => {
-				console.log( res ) ;
+				this.msg.success('退单成功') ;
+				this.operate.emit('fresh') ;
+				this.backCancel() ;
 			})
 	}
 
@@ -82,4 +94,6 @@ export class CashOrderItemComponent implements OnInit{
 		this.checkIndex = idx ;
 		this.checkList = item ;
 	}
+
+	@Output() operate: EventEmitter< any > = new EventEmitter() ;
 }
