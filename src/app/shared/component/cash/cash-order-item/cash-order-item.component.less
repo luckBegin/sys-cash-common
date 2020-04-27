@@ -1,6 +1,6 @@
 .order-item-wrapper {
 	width: 100%;
-	height: 50%;
+	height: 33.3333%;
 	position: relative;
     overflow: hidden;
 	border-bottom: 1px solid rgba(204, 204, 204, 0.3);
@@ -22,23 +22,58 @@
 			background: rgba(0, 0, 0, 0.28);
 			color: #e3e4e2;
 			cursor: pointer;
-			transition: all .3s ease-in;
+			transition: all .15s linear;
+			font-size: 12px;
 		}
 
 		& .order-item:hover ,
 		& .order-item-active{
 			background: rgba(0, 0, 0, 0.72);
 		}
+
+		& ::ng-deep .ant-tabs-bar{
+			border-bottom: 1px solid rgba(220, 220, 220, 0.34);
+		}
+		& ::ng-deep .ant-tabs-nav .ant-tabs-tab {
+			color: #e3e4e2;
+		}
+
+		& ::ng-deep .ant-tabs-nav .ant-tabs-tab-active,
+		& ::ng-deep .ant-tabs-nav .ant-tabs-tab:hover{
+			color: #c1b61a !important ;
+		}
+
+		& ::ng-deep .ant-tabs-ink-bar{
+			background: #c1b61a !important ;
+		}
+
+		& .detail-container{
+			height: 100%;
+			overflow-y: hidden;
+		}
+
+		& .order-item-chose{
+			background: #576346 ;
+		}
 	}
 	& .mark{
 		color:#f08029;
+	}
+
+	.payMoney ,
+	.backMoney{
+		width: 20%;
+		text-align: right;
+	}
+
+	.payMoney{
+		color:#f58282 ;
 	}
 }
 
 .order-item-back{
 	padding-bottom: 40px;
 	position: relative;
-
 	& .back-operate{
 		width: 100%;
 		height: 40px;
@@ -52,7 +87,7 @@
 			text-align: center;
 			line-height: 40px;
 			cursor: pointer;
-			transition: all .3s ease-in;
+			transition: all .15s linear;
 			color: #fff;
 		}
 

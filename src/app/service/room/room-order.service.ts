@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core' ;
 import {HttpClient} from '@angular/common/http' ;
 import {MsgService} from '../msg/msg.service' ;
-import {GET, POST} from '../../../decorators' ;
+import {GET, Ignore, POST} from '../../../decorators' ;
 import {API} from '../API' ;
 import {ENUM, RESPONSE} from '../../models';
 import {Observable} from 'rxjs';
@@ -28,6 +28,13 @@ export class RoomOrderService {
 	@GET(API.room.order)
 	public getList( para ?: any ): any | Observable< RESPONSE > {}
 
-	@GET(API.room.orderItem )
+	@GET(API.room.orderItem + '/check')
+	public getChecks( para ?: any ): any | Observable< RESPONSE > {}
+
+	@GET( API.room.orderItem )
 	public getItemList( para ?: any ): any | Observable< RESPONSE > {}
+
+	@Ignore()
+	@POST(API.room.orderItem + '/back')
+	public backOrder( para ?: any ): any | Observable< RESPONSE > {}
 }

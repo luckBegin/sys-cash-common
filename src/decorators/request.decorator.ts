@@ -3,22 +3,39 @@ import {observable, Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {RESPONSE} from '../app/models';
 import {HttpHeaders} from '@angular/common/http';
-
+import {IgnoreList} from "../app/shared/interceptor.service";
 class DTO {
 	static create( data: any) {
-		const _obj = {} ;
-		Object.keys(data).forEach( key => {
-			const val = data[key] ;
-			if (val !== '' && val !== null && val !== 'null' && val !== 'undefined' && val !== undefined ) {
-				_obj[key] = val ;
-			}
-		});
-		return _obj ;
+		if( data instanceof  Array ) {
+			return data
+		} else {
+			const _obj = {} ;
+			Object.keys(data).forEach( key => {
+				const val = data[key] ;
+				if (val !== '' && val !== null && val !== 'null' && val !== 'undefined' && val !== undefined ) {
+					_obj[key] = val ;
+				}
+			});
+			return _obj ;
+		}
 	}
 }
+
+export function Ignore(): MethodDecorator {
+	return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+		const config = target[propertyKey].config ;
+		IgnoreList.add(config.url , config.type) ;
+		const raw = descriptor.value ;
+		descriptor.value = function(...arg) {
+			return raw.apply( this , arg ) ;
+		}
+	}
+}
+
 export function GET(url: string, msg: string = '获取数据失败,原因 : '): MethodDecorator {
 	return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
 		const raw = descriptor.value;
+		target[propertyKey].config = {type: 'GET' , url}
 		descriptor.value = function(...arg) {
 			return new Observable(obsr => {
 				const queryPara = ObjToQuery(arg[0]);
@@ -46,6 +63,7 @@ export function GET(url: string, msg: string = '获取数据失败,原因 : '): 
 
 export function POST(url: string, json: boolean = true, msg: string = '提交失败,原因 : '): MethodDecorator {
 	return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+		target[propertyKey].config = {type: 'POST' , url}
 		const raw = descriptor.value;
 		descriptor.value = function(...arg) {
 			const data = DTO.create(arg[0]);
@@ -77,6 +95,7 @@ export function POST(url: string, json: boolean = true, msg: string = '提交失
 export function PUT(url: string, withId: boolean = false, msg: string = '保存失败,原因 : ', json: boolean = true): MethodDecorator {
 	return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
 		const raw = descriptor.value;
+		target[propertyKey].config = {type: 'PUT' , url}
 		descriptor.value = function(...arg) {
 			const headers = new HttpHeaders();
 			if ( json ) {
@@ -109,6 +128,7 @@ export function PUT(url: string, withId: boolean = false, msg: string = '保存�
 export function DELETE(url: string, msg: string = '删除失败,原因 : '): MethodDecorator {
 	return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
 		const raw = descriptor.value;
+		target[propertyKey].config = {type: 'DELETE' , url}
 		descriptor.value = function(...arg) {
 			return new Observable(obsr => {
 				this.http.delete(url + '/' + arg[0].id)

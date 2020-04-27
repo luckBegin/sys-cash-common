@@ -4,32 +4,95 @@
 	</div>
 	<div class="container scrollWrap">
 		<div
-			*ngFor="let item of data" class = 'c-flex-row-space order-item'
-			(click)="addToBack(item)"
+			*ngFor="let item of data ; let idx = index"
+			class = 'c-flex-row-space order-item'
+			[ngClass]="{'order-item-active': idx === checkIndex}"
+			(click)="checkSelect(item , idx)"
 		>
 			<div class = 'c-text-overflow'
-			     nz-tooltip [nzTitle]="'名称: ' +item.name"
-			>{{ item.name }}</div>
+			> {{ item.checkNo }} </div>
 
-			<div class = 'c-text-overflow'
-			     nz-tooltip [nzTitle]="'价格: ¥'+item.shouldMoney"
-			>
-				消费:
-				<span class = 'mark'>
-					{{ item.shouldMoney | cusCurrency }}
-				</span>
-			</div>
+			<div class = 'c-text-overflow payMoney'
+			     nz-tooltip [nzTitle]="'消费: ¥' +item.payMoney"
+			> {{ item.payMoney | cusCurrency }} </div>
 
-			<div class = 'c-text-overflow'
-			     nz-tooltip [nzTitle]="'数量: ' +item.count"
-			>
-				数量:
-				<span class = 'mark'>
-					{{ item.count}}
-				</span>
-			</div>
-
+			<div class = 'c-text-overflow backMoney'
+			     nz-tooltip [nzTitle]="'已退: ¥' +item.backMoney"
+			> {{ item.backMoney | cusCurrency }} </div>
 		</div>
+	</div>
+</div>
+
+<div class = 'order-item-wrapper'>
+	<div class = 'title'>
+		消费详情  <span *ngIf="checkList"> - {{ checkList.checkNo }}</span>
+	</div>
+	<div class="container scrollWrap">
+		<nz-tabset>
+			<nz-tab nzTitle="已点">
+				<div class = 'detail-container'>
+					<div class = 'scrollWrap' *ngIf="checkList">
+						<div
+							*ngFor="let item of checkList.payList" class = 'c-flex-row-space order-item'
+							(click)="addToBack(item)"
+							[ngClass]="{'order-item-chose': addFormListMap[item.id] >= 0 }"
+						>
+							<div class = 'c-text-overflow'
+							>{{ item.name }}</div>
+
+							<div class = 'c-text-overflow'
+							     nz-tooltip [nzTitle]="'价格: ¥'+item.shouldMoney"
+							>
+								消费:
+								<span class = 'mark'>
+									{{ item.shouldMoney | cusCurrency }}
+								</span>
+							</div>
+
+							<div class = 'c-text-overflow'
+							     nz-tooltip [nzTitle]="'数量: ' +item.count"
+							>
+								数量:
+								<span class = 'mark'>
+									{{ item.count}}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nz-tab>
+			<nz-tab nzTitle="已退">
+				<div class = 'detail-container'>
+					<div class = 'scrollWrap' *ngIf="checkList">
+						<div
+							*ngFor="let item of checkList.backList" class = 'c-flex-row-space order-item'
+						>
+							<div class = 'c-text-overflow'
+							     nz-tooltip [nzTitle]="'名称: ' +item.name"
+							>{{ item.name }}</div>
+
+							<div class = 'c-text-overflow'
+							     nz-tooltip [nzTitle]="'价格: ¥'+item.shouldMoney"
+							>
+								消费:
+								<span class = 'mark'>
+									{{ item.shouldMoney | cusCurrency }}
+								</span>
+							</div>
+
+							<div class = 'c-text-overflow'
+							     nz-tooltip [nzTitle]="'数量: ' +item.count"
+							>
+								数量:
+								<span class = 'mark'>
+									{{ item.count}}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nz-tab>
+		</nz-tabset>
 	</div>
 </div>
 <div class = 'order-item-wrapper order-item-back' [formGroup]="form">
@@ -41,7 +104,13 @@
 			*ngFor="let item of list.controls ; let idx = index"
 			class = 'c-flex-row-space order-item'
 			[formGroupName]="idx"
+			[@ngIfAnimate]
 		>
+			<i
+				class = 'anticon anticon-close item-delete'
+				nz-popconfirm nzTitle="确定移除该项?" (nzOnConfirm)="removeForm(item.value.id)"
+			>
+			</i>
 			<div class = 'c-text-overflow'
 			>{{ item.value.name }}</div>
 			<div class = 'c-text-overflow'
@@ -65,7 +134,7 @@
 	</div>
 
 	<div class="back-operate c-flex-row-start" [@ngIfAnimate] *ngIf="list.controls.length">
-		<div>退单</div>
+		<div (click)="backOrder()">退单</div>
 		<div (click)="backCancel()">取消</div>
 	</div>
 </div>

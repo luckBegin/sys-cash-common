@@ -6,6 +6,19 @@ import { SesssionStorageService } from '../service/storage';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
+class CIgnoreList {
+	private list: { [key: string]: { [key:string]: boolean } } = {} ;
+
+	public add( url: string , type: string): void {
+		this.list[url] = { type: true } ;
+	}
+
+	public exist( url: string , type: string): boolean {
+		return ( !!this.list[url] && !!this.list[url][type] )
+	}
+}
+
+export const IgnoreList = new CIgnoreList() ;
 @Injectable()
 export class HttpIntercept implements HttpInterceptor {
 	constructor(
@@ -42,7 +55,7 @@ export class HttpIntercept implements HttpInterceptor {
 			}
 
 			if ( req.method === 'POST' ) {
-				if (req.body && !req.body['shopId']) {
+				if (req.body && !req.body['shopId'] && !IgnoreList.exist(req.url , 'POST')) {
 					req.body['shopId'] = shopId;
 				}
 			}

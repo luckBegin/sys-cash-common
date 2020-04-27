@@ -49,7 +49,7 @@ export class CashOrderComponent implements OnInit {
 	public orderItemSelect: any = {} ;
 	public orderSelect( item ) {
 		this.orderItemSelect = item ;
-		this.service.getItemList({ orderId: item.id })
+		this.service.getChecks({ orderId: item.id })
 			.pipe(
 				filter( (res: RESPONSE) => res.success),
 				map( (res: RESPONSE) => res.data )
