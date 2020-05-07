@@ -89,7 +89,6 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 
 	public checkIndex: number = null ;
 
-
 	public checkSelect(item:any , idx: number): void {
 		this.checkIndex = idx ;
 		this.checkList = item ;
