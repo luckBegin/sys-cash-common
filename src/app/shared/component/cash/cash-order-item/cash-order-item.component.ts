@@ -25,6 +25,7 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 			if( this.checkList ) {
 				const checkNo = this.checkList.checkNo ;
 				this.checkList = changes.data.currentValue.find( item => item.checkNo = checkNo ) ;
+				this.backCancel() ;
 			}
 		}
 	}
@@ -64,7 +65,7 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 			name: [item.name] ,
 			shouldMoney: [item.shouldMoney] ,
 			max: [ item.count ] ,
-			orderId: [item.orderId] ,
+			checkNo: [item.checkNo] ,
 			shopId: [ item.shopId ]
 		}));
 	}
