@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from "@angular/core";
-import {ngIfAnimation} from "../../../../router/router-animation";
-import {Form, FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {MsgService, RoomOrderService} from "../../../../service";
-import {RESPONSE} from "../../../../models";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ngIfAnimation} from '../../../../router/router-animation';
+import {Form, FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {MsgService, RoomOrderService} from '../../../../service';
+import {RESPONSE} from '../../../../models';
 
 @Component({
 	selector: 'cashOrderItem',
@@ -10,19 +10,19 @@ import {RESPONSE} from "../../../../models";
 	styleUrls: ['./cash-order-item.component.less'] ,
 	animations: [ngIfAnimation]
 })
-export class CashOrderItemComponent implements OnInit , OnChanges{
+export class CashOrderItemComponent implements OnInit , OnChanges {
 	constructor(
 		private readonly fb: FormBuilder ,
 		private readonly orderSer: RoomOrderService ,
 		private readonly msg: MsgService
-	) {};
+	) {}
 
 	ngOnInit(): void {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if( changes.data && changes.data.currentValue ) {
-			if( this.checkList ) {
+		if ( changes.data && changes.data.currentValue ) {
+			if ( this.checkList ) {
 				const checkNo = this.checkList.checkNo ;
 				this.checkList = changes.data.currentValue.find( item => item.checkNo = checkNo ) ;
 				this.backCancel() ;
@@ -32,17 +32,17 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 
 	@Input() data: any[] = [];
 
-	private addFormListMap: { [key:string]: number } = {} ;
+	private addFormListMap: { [key: string]: number } = {} ;
 
-	public addToBack(data:any): void {
-		if( this.addFormListMap.hasOwnProperty(data.id)) {
+	public addToBack(data: any): void {
+		if ( this.addFormListMap.hasOwnProperty(data.id)) {
 			this.removeForm( data.id ) ;
 		} else {
-			this.addForm( data )
+			this.addForm( data );
 		}
 	}
 
-	public backCancel(): void{
+	public backCancel(): void {
 		while (this.list.length !== 0) {
 			this.list.removeAt(0) ;
 		}
@@ -51,9 +51,9 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 
 	public form: FormGroup = this.fb.group({
 		list: this.fb.array([])
-	})
+	});
 
-	get list() : FormArray {
+	get list(): FormArray {
 		return this.form.get('list') as FormArray ;
 	}
 
@@ -83,14 +83,14 @@ export class CashOrderItemComponent implements OnInit , OnChanges{
 				this.msg.success('退单成功') ;
 				this.operate.emit('fresh') ;
 				this.backCancel() ;
-			})
+			});
 	}
 
 	public checkList: any = null ;
 
 	public checkIndex: number = null ;
 
-	public checkSelect(item:any , idx: number): void {
+	public checkSelect(item: any , idx: number): void {
 		this.checkIndex = idx ;
 		this.checkList = item ;
 	}

@@ -3,8 +3,8 @@ import {MsgService, RoomOrderService} from '../../../../service';
 import {ENUM, RESPONSE} from '../../../../models';
 import {QueryModel} from './query.model';
 import {filter, map} from 'rxjs/operators';
-import {interval, Subscription} from "rxjs";
-import {CONFIG} from "../../../../CONFIG";
+import {interval, Subscription} from 'rxjs';
+import {CONFIG} from '../../../../CONFIG';
 
 @Component({
 	selector: 'cash-order',
@@ -42,6 +42,7 @@ export class CashOrderComponent implements OnInit {
 
 	public changeStatus( status: number | string ): void {
 		this.queryModel.status = status ;
+		this.orderItemList = [] ;
 		this.getList() ;
 	}
 
@@ -64,7 +65,7 @@ export class CashOrderComponent implements OnInit {
 			this.getList() ;
 			this.ajaxTimer$ = interval(CONFIG.timer)
 				.subscribe(() => {
-					this.getList()
+					this.getList();
 				});
 		} else {
 			if (this.ajaxTimer$) {
@@ -73,7 +74,7 @@ export class CashOrderComponent implements OnInit {
 		}
 	}
 
-	public orderItemOperate($event:any): void {
+	public orderItemOperate($event: any): void {
 		this.getList() ;
 		this.orderSelect( this.orderItemSelect ) ;
 	}
